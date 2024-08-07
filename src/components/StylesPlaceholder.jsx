@@ -5,6 +5,9 @@ export default function StylesPlaceholder() {
         <button className="btn btn-secondary"></button>
         <button className="btn btn-error"></button>
         <button className="btn btn-success"></button>
+        <button className="btn btn-info"></button>
+        <button className="btn btn-warning"></button>
+        <button className="btn btn-accent"></button>
         </>
     );
 }
