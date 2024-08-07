@@ -1,3 +1,4 @@
+
 // export default function Button ({ props }) {
 //     const color = props.color ? props.color : '';
 //     const type = props.type;
@@ -13,7 +14,8 @@
 //     );
 // }
 
-export default function Button({children, props}) {
+export default function Button(props) {
     console.log(props);
-    return (<button className="btn hover:btn-active">{children}</button>)
+    const color = props.color ? props.color : '';
+    return (<button className={`btn btn-${color} hover:btn-active`}>{props.children}</button>)
 }
