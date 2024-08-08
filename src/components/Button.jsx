@@ -1,13 +1,13 @@
-'use client';
+"use client";
 export default function Button(props) {
-  const type = props.type ? props.type : 'button';
+  const type = props.type ? props.type : "button";
 
   const handleClick = (event) => {
     event.preventDefault();
-    props.action()
+    props.action();
   };
 
-  const color = props.color ? props.color : 'primary';
+  const color = props.color ? props.color : "primary";
 
   return (
     <button
