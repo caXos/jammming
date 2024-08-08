@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import Track from "./Track";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -12,12 +13,11 @@ export default function SearchResults() {
           Tunes found
         </span>
         <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full">
-            <p>Track</p>
-            <p>Track</p>
-            <p>Track</p>
-            <p>Track</p>
+          <Track search={true} />
+          <Track search={true} />
+          <Track search={true} />
+          <Track search={true} />
         </div>
-
       </div>
     </>
   );
