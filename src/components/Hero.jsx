@@ -21,7 +21,7 @@ export default function Hero() {
           </span>
         </div>
 
-        <p className="py-6 text-center text-accent">
+        <p className="py-6 text-center text-accent text-xl">
           How &apos;bout get jammming and grooving and create new playlists to
           your Spotify account?
         </p>

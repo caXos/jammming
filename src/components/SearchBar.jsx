@@ -13,8 +13,8 @@ export default function SearchBar() {
   };
 
   const testeAction = () => {
-    console.log("Final search string: " + search)
-  }
+    console.log("Final search string: " + search);
+  };
 
   return (
     <>

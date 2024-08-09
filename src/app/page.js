@@ -11,9 +11,6 @@ export default function Home() {
       <Hero />
       <SearchBar />
       <SearchResultsContainer />
-      <Button color="primary" action={() => console.log("eizem")}>
-        Primary
-      </Button>
     </main>
   );
 }

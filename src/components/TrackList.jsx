@@ -1,6 +1,8 @@
 import localFont from "next/font/local";
 import Track from "./Track";
-import { render } from "react-dom";
+import CircleButton from "./CircleButton";
+import Button from "./Button";
+import NoteIcon from "./Icon_Note";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -39,28 +41,46 @@ const mockTracks = [
   },
 ];
 export default function TrackList() {
-
-    const renderTracks = () => {
-        mockTracks.map((track, index, mockTracks) => {
-            console.log(track)
-            return (<Track key={track.trackNumber}
-              trackNumber={track.trackNumber}
-              first={index === 0 ? true : false}
-              last={index + 1 === mockTracks.length}
-              track={track}
-            />);
-          })
-    }
   return (
     <>
-      <div className="flex flex-col items-center justify-between bg-base-200 p-2 gap-2 rounded-md w-11/12">
+      <div className="flex flex-col items-center justify-between bg-base-200 mx-2 gap-2 rounded-md w-11/12">
         <span
           className={`text-2xl text-black text-center ${amVinylFont.className}`}
         >
-          My New Jam!
+          My New Jammm!
         </span>
         <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full">
-          {renderTracks()}
+          <input
+            type="text"
+            placeholder="My awesome jammm!"
+            className="input input-bordered w-full max-w-xs text-accent"
+            // value={search}
+            // onInput={handleInput}
+          />
+          {mockTracks.map((track, index, mockTracks) => {
+            return (
+              <>
+                <div className="w-full flex justify-between items-center hover:bg-base-200 mx-2 px-2" key={index}>
+                  <p>{index + 1}: </p>
+                  <Track track={track} />
+                  <div className="grid grid-cols-3 gap-x-2">
+                    <CircleButton icon="up" />
+                    <CircleButton icon="down" />
+                    <CircleButton icon="remove" />
+                  </div>
+                </div>
+              </>
+            );
+          })}
+
+<div className="flex w-full text-center justify-evenly">
+  <p>Track count: 9999</p>
+  <p>Total time: 999:99</p>
+</div>
+          <Button color="secondary">
+            <NoteIcon />
+            Create!
+          </Button>
         </div>
       </div>
     </>
