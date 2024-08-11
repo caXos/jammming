@@ -1,8 +1,10 @@
+'use client'
 import localFont from "next/font/local";
 import Track from "./Track";
 import CircleButton from "./CircleButton";
 import Button from "./Button";
 import NoteIcon from "./Icon_Note";
+import { useState } from 'react';
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -41,6 +43,9 @@ const mockTracks = [
   },
 ];
 export default function TrackList() {
+
+  const [jammmName, setJammmName] = useState('');
+  
   return (
     <>
       <div className="flex flex-col items-center justify-between bg-base-200 mx-2 gap-2 rounded-md w-11/12">
@@ -60,10 +65,10 @@ export default function TrackList() {
           {mockTracks.map((track, index, mockTracks) => {
             return (
               <>
-                <div className="w-full flex justify-between items-center hover:bg-base-200 mx-2 px-2" key={index}>
-                  <p>{index + 1}: </p>
-                  <Track track={track} />
-                  <div className="grid grid-cols-3 gap-x-2">
+                <div className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 " key={index}>
+                  <p className="row-span-2 pl-2">{index + 1}: </p>
+                  <Track track={track} customClass="col-span-9"/>
+                  <div className="flex justify-evenly w-full p-2 col-span-9">
                     <CircleButton icon="up" />
                     <CircleButton icon="down" />
                     <CircleButton icon="remove" />

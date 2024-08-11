@@ -35,7 +35,7 @@ export default function SearchResults() {
       trackNumber: 3,
       ico: "ico",
       title: "Título 3",
-      artist: "Artista 3",
+      artist: "Artista 333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
       album: "Album 3",
       time: "03:03",
     },
@@ -54,7 +54,7 @@ export default function SearchResults() {
           <SortRadios />
           {mockTracks.map((track, index) => {
             return (
-              <div key={index} className="w-full flex items-center">
+              <div key={index} className="w-full flex items-center py-2 hover:bg-base-200 rounded-md p-2">
                 <Track track={track} />
                 <CircleButton icon="add" />
               </div>
