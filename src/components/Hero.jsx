@@ -21,7 +21,16 @@ export default function Hero() {
           </span>
         </div>
 
-        <p className="py-6 text-center text-accent text-xl">
+        <p className="py-2 text-center text-accent text-xl">
+          Feelin&apos; happy, with an urge to clap your hands?
+        </p>
+        <p className="py-2 text-center text-accent text-xl">
+          Super sad wantin&apos; to drown your sorrows?
+        </p>
+        <p className="py-2 text-center text-accent text-xl">
+          Urgin&apos; to conquer the world with some metal fists!?
+        </p>
+        <p className="py-2 text-center text-accent text-xl">
           How &apos;bout get jammming and grooving and create new playlists to
           your Spotify account?
         </p>
