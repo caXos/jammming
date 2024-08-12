@@ -19,8 +19,39 @@ export default function Home() {
     } else {
       setSearchErrors("");
       alert("Final search string: " + searchParams);
+      setTracks(mockTracks) // Make request to Spotify's API
     }
   };
+
+  const [tracks, setTracks] = useState([]);
+
+  const mockTracks = [
+    {
+      title: "Título 0",
+      artist: "Artista 0",
+      album: "Album 0",
+      time: "03:00",
+    },
+    {
+      title: "Título 1",
+      artist: "Artista 1",
+      album: "Album 1",
+      time: "03:01",
+    },
+    {
+      title: "Título 2",
+      artist: "Artista 2",
+      album: "Album 2",
+      time: "03:02",
+    },
+    {
+      title: "Título 3",
+      artist:
+        "Artista 333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+      album: "Album 3",
+      time: "03:03",
+    },
+  ];
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start gap-4 bg-base-100">
@@ -31,7 +62,7 @@ export default function Home() {
         validateSearchInput={validateSearchInput}
         errorMessage={searchErrors}
       />
-      <SearchResultsContainer />
+      <SearchResultsContainer tracks={tracks} />
       <ThemeSelectorContainer />
     </main>
   );

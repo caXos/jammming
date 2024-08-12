@@ -47,7 +47,7 @@ const mockTracks = [
 const trackTimes = null;
 // https://stackoverflow.com/questions/9640266/convert-hhmmss-string-to-seconds-only-in-javascript
 
-export default function TrackList() {
+export default function TrackList({tracks}) {
   const [jammmName, setJammmName] = useState("");
 
   const handleJammmNameInput = (event) => {
