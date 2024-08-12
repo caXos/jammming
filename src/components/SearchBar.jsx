@@ -21,7 +21,7 @@ export default function SearchBar() {
     <>
       <div className="flex flex-col items-center justify-between bg-base-200 p-2 gap-2 rounded-md w-11/12">
         <span
-          className={`text-2xl text-black text-center ${amVinylFont.className}`}
+          className={`text-2xl text-primary text-center ${amVinylFont.className}`}
         >
           Whatcha lookin&apos; for, sweetie?
         </span>

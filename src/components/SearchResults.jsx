@@ -35,7 +35,8 @@ export default function SearchResults() {
       trackNumber: 3,
       ico: "ico",
       title: "Título 3",
-      artist: "Artista 333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+      artist:
+        "Artista 333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
       album: "Album 3",
       time: "03:03",
     },
@@ -45,18 +46,23 @@ export default function SearchResults() {
     <>
       <div className="flex flex-col items-center justify-between bg-base-200 p-2 gap-2 rounded-md w-11/12">
         <span
-          className={`text-2xl text-black text-center ${amVinylFont.className}`}
+          className={`text-2xl text-primary text-center ${amVinylFont.className}`}
         >
           Tunes found
         </span>
         <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full">
-          Sort by:
+          <span className="text-accent">Sort by:</span>
           <SortRadios />
           {mockTracks.map((track, index) => {
             return (
-              <div key={index} className="w-full flex items-center py-2 hover:bg-base-200 rounded-md p-2">
+              <div
+                key={index}
+                className="w-full flex items-center py-2 hover:bg-base-200 rounded-md p-2"
+              >
                 <Track track={track} />
-                <CircleButton icon="add" />
+                <div className="md:tooltip" data-tip="Add to tracklist">
+                  <CircleButton icon="add" />
+                </div>
               </div>
             );
           })}

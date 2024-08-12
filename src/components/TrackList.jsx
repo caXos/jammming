@@ -6,7 +6,6 @@ import Button from "./Button";
 import NoteIcon from "./Icon_Note";
 import { useState } from "react";
 import ErrorMessageContainer from "./ErrorMessageContainer";
-import VinylIcon from './Icon_Vinyl';
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -47,45 +46,93 @@ const mockTracks = [
 export default function TrackList() {
   const [jammmName, setJammmName] = useState("");
 
+  const handleJammmNameInput = (event) => {
+    setJammmName(event.target.value);
+  };
+
   return (
     <>
       <div className="flex flex-col items-center justify-between bg-base-200 mx-2 gap-2 rounded-md w-11/12">
         <span
-          className={`text-2xl text-black text-center ${amVinylFont.className}`}
+          className={`text-2xl text-primary text-center ${amVinylFont.className}`}
         >
           My New Jammm!
         </span>
-        <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full">
+        <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full text-accent">
           <div className="indicator my-1">
             <span className="indicator-item badge">Required</span>
             <input
               type="text"
               placeholder="My awesome jammm!"
               className="input input-bordered w-full max-w-xs text-accent"
-              // value={search}
-              // onInput={handleInput}
+              value={jammmName}
+              onInput={handleJammmNameInput}
             />
           </div>
 
-          <ErrorMessageContainer error='' />
+          <ErrorMessageContainer error="" />
 
           {mockTracks.map((track, index, mockTracks) => {
-            return (
-              <>
+            if (index === 0) {
+              return (
                 <div
                   className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
-                  key={index}
+                  key={"jammmTrack-" + index}
                 >
                   <p className="row-span-2 pl-2">{index + 1}: </p>
                   <Track track={track} customClass="col-span-9" />
                   <div className="flex justify-evenly w-full p-2 col-span-9">
-                    <CircleButton icon="up" />
-                    <CircleButton icon="down" />
-                    <CircleButton icon="remove" />
+                    <div className="md:tooltip" data-tip="Move down">
+                      <CircleButton icon="down" />
+                    </div>
+                    <div className="md:tooltip" data-tip="Remove">
+                      <CircleButton icon="remove" />
+                    </div>
                   </div>
                 </div>
-              </>
-            );
+              );
+            } else {
+              if (index + 1 === mockTracks.length) {
+                return (
+                  <div
+                    className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
+                    key={"jammmTrack-" + index}
+                  >
+                    <p className="row-span-2 pl-2">{index + 1}: </p>
+                    <Track track={track} customClass="col-span-9" />
+                    <div className="flex justify-evenly w-full p-2 col-span-9">
+                      <div className="md:tooltip" data-tip="Move up">
+                        <CircleButton icon="up" />
+                      </div>
+                      <div className="md:tooltip" data-tip="Remove">
+                        <CircleButton icon="remove" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div
+                    className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
+                    key={"jammmTrack-" + index}
+                  >
+                    <p className="row-span-2 pl-2">{index + 1}: </p>
+                    <Track track={track} customClass="col-span-9" />
+                    <div className="flex justify-evenly w-full p-2 col-span-9">
+                      <div className="md:tooltip" data-tip="Move up">
+                        <CircleButton icon="up" />
+                      </div>
+                      <div className="md:tooltip" data-tip="Move down">
+                        <CircleButton icon="down" />
+                      </div>
+                      <div className="md:tooltip" data-tip="Remove">
+                        <CircleButton icon="remove" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+            }
           })}
 
           <div className="flex w-full text-center justify-evenly">
