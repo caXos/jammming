@@ -2,6 +2,7 @@
 import localFont from "next/font/local";
 import { useState } from "react";
 import Button from "./Button";
+import ErrorMessageContainer from "./ErrorMessageContainer";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -25,13 +26,18 @@ export default function SearchBar() {
           Whatcha lookin&apos; for, sweetie?
         </span>
 
-        <input
-          type="text"
-          placeholder="Type here"
-          className="input input-bordered w-full max-w-xs text-accent"
-          value={search}
-          onInput={handleInput}
-        />
+        <div className="indicator">
+          <span className="indicator-item badge">Required</span>
+          <input
+            type="text"
+            placeholder="Type here"
+            className="input input-bordered w-full max-w-xs text-accent"
+            value={search}
+            onInput={handleInput}
+          />
+        </div>
+
+        <ErrorMessageContainer error=''/>
 
         <Button action={testeAction}>Find tunes!</Button>
       </div>
