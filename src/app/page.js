@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
-
+import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
 
 export default function Home() {
   return (
@@ -11,6 +11,7 @@ export default function Home() {
       <Hero />
       <SearchBar />
       <SearchResultsContainer />
+      <ThemeSelectorContainer />
     </main>
   );
 }
