@@ -43,11 +43,26 @@ const mockTracks = [
     time: "03:03",
   },
 ];
+
+const trackTimes = null;
+// https://stackoverflow.com/questions/9640266/convert-hhmmss-string-to-seconds-only-in-javascript
+
 export default function TrackList() {
   const [jammmName, setJammmName] = useState("");
 
   const handleJammmNameInput = (event) => {
     setJammmName(event.target.value);
+  };
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = () => {
+    if (!jammmName) {
+      setErrorMessage("You need to input a name for your Playlist!");
+      alert("erro");
+    } else {
+      setErrorMessage("");
+      alert(jammmName);
+    }
   };
 
   return (
@@ -70,7 +85,7 @@ export default function TrackList() {
             />
           </div>
 
-          <ErrorMessageContainer error="" />
+          <ErrorMessageContainer error={errorMessage} />
 
           {mockTracks.map((track, index, mockTracks) => {
             if (index === 0) {
@@ -139,7 +154,7 @@ export default function TrackList() {
             <p>Track count: 9999</p>
             <p>Total time: 999:99</p>
           </div>
-          <Button color="secondary">
+          <Button color="secondary" action={handleSubmit}>
             <NoteIcon />
             Create!
           </Button>
