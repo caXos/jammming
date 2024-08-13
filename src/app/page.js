@@ -27,27 +27,27 @@ export default function Home() {
 
   const mockTracks = [
     {
-      title: "Título 0",
-      artist: "Artista 0",
+      title: "Título AAA",
+      artist: "Artista CCC",
       album: "Album 0",
       time: "03:00",
     },
     {
-      title: "Título 1",
-      artist: "Artista 1",
+      title: "Título CCC",
+      artist: "Artista AAA",
       album: "Album 1",
       time: "03:01",
     },
     {
-      title: "Título 2",
-      artist: "Artista 2",
+      title: "Título BBB",
+      artist: "Artista BBB",
       album: "Album 2",
       time: "03:02",
     },
     {
       title: "Título 3",
       artist:
-        "Artista 333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+        "Artista 3",
       album: "Album 3",
       time: "03:03",
     },

@@ -47,7 +47,7 @@ const mockTracks = [
 const trackTimes = null;
 // https://stackoverflow.com/questions/9640266/convert-hhmmss-string-to-seconds-only-in-javascript
 
-export default function TrackList({tracks}) {
+export default function TrackList({ tracks }) {
   const [jammmName, setJammmName] = useState("");
 
   const handleJammmNameInput = (event) => {
@@ -88,66 +88,36 @@ export default function TrackList({tracks}) {
           <ErrorMessageContainer error={errorMessage} />
 
           {mockTracks.map((track, index, mockTracks) => {
-            if (index === 0) {
-              return (
-                <div
-                  className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
-                  key={"jammmTrack-" + index}
-                >
-                  <p className="row-span-2 pl-2">{index + 1}: </p>
-                  <Track track={track} customClass="col-span-9" />
-                  <div className="flex justify-evenly w-full p-2 col-span-9">
+            return (
+              <div
+                className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
+                key={"jammmTrack-" + index}
+              >
+                <p className="row-span-2 pl-2">{index + 1}: </p>
+                <Track track={track} customClass="col-span-9" />
+                <div className="flex justify-evenly w-full p-2 col-span-9">
+                  {index === 0 ? (
+                    ""
+                  ) : (
+                    <div className="md:tooltip" data-tip="Move up">
+                      <CircleButton icon="up" />
+                    </div>
+                  )}
+
+                  {index + 1 === mockTracks.length ? (
+                    ""
+                  ) : (
                     <div className="md:tooltip" data-tip="Move down">
                       <CircleButton icon="down" />
                     </div>
-                    <div className="md:tooltip" data-tip="Remove">
-                      <CircleButton icon="remove" />
-                    </div>
+                  )}
+
+                  <div className="md:tooltip" data-tip="Remove">
+                    <CircleButton icon="remove" />
                   </div>
                 </div>
-              );
-            } else {
-              if (index + 1 === mockTracks.length) {
-                return (
-                  <div
-                    className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
-                    key={"jammmTrack-" + index}
-                  >
-                    <p className="row-span-2 pl-2">{index + 1}: </p>
-                    <Track track={track} customClass="col-span-9" />
-                    <div className="flex justify-evenly w-full p-2 col-span-9">
-                      <div className="md:tooltip" data-tip="Move up">
-                        <CircleButton icon="up" />
-                      </div>
-                      <div className="md:tooltip" data-tip="Remove">
-                        <CircleButton icon="remove" />
-                      </div>
-                    </div>
-                  </div>
-                );
-              } else {
-                return (
-                  <div
-                    className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
-                    key={"jammmTrack-" + index}
-                  >
-                    <p className="row-span-2 pl-2">{index + 1}: </p>
-                    <Track track={track} customClass="col-span-9" />
-                    <div className="flex justify-evenly w-full p-2 col-span-9">
-                      <div className="md:tooltip" data-tip="Move up">
-                        <CircleButton icon="up" />
-                      </div>
-                      <div className="md:tooltip" data-tip="Move down">
-                        <CircleButton icon="down" />
-                      </div>
-                      <div className="md:tooltip" data-tip="Remove">
-                        <CircleButton icon="remove" />
-                      </div>
-                    </div>
-                  </div>
-                );
-              }
-            }
+              </div>
+            );
           })}
 
           <div className="flex w-full text-center justify-evenly">
