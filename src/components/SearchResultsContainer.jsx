@@ -20,6 +20,14 @@ export default function SearchResultsContainer({ tracks }) {
   const sortTracks = () => {
     let sortedTracks = [];
     console.log(sortBy + "no searchresultcontainer");
+    sortedTracks = tracks.toSorted((t1, t2) => {
+      let t1LowerCase = t1[sortBy].toLowerCase();
+      let t2LowerCase = t2[sortBy].toLowerCase();
+      if (t1LowerCase < t2LowerCase) return -1;
+      if (t1LowerCase > t2LowerCase) return 1;
+      return 0;
+    });
+    setTrackList(sortedTracks)
   };
   return (
     <>
