@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en" data-theme="retro">
       <body className={inter.className}>
         {children}
-        <ToastContainer position="bottom-center" autoClose={2000} icon={<Icon_Vinyl/>}/>
+        <ToastContainer position="bottom-center" autoClose={2000} icon={<Icon_Vinyl/>} />
       </body>
     </html>
   );

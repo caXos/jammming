@@ -5,10 +5,11 @@ import TrackList from "./TrackList";
 
 export default function SearchResultsContainer({ tracks }) {
   const [trackList, setTrackList] = useState([]);
+  const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
 
   const addTrack = (track) => {
-    setTrackList([...trackList, track]);
+    setJammmTracks([...jammmTracks, track]);
   };
 
   const changeSortBy = (desiredSort) => {
@@ -40,7 +41,7 @@ export default function SearchResultsContainer({ tracks }) {
           addTrack={addTrack}
           changeSortBy={changeSortBy}
         />
-        <TrackList tracks={trackList} />
+        <TrackList tracks={jammmTracks} />
       </div>
     </>
   );
