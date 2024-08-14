@@ -42,6 +42,14 @@ const mockTracks = [
     album: "Album 3",
     time: "03:03",
   },
+  {
+    trackNumber: 3,
+    ico: "ico",
+    title: "Título 3",
+    artist: "Artista 3",
+    album: "Album 3",
+    time: "03:03",
+  },
 ];
 
 const trackTimes = null;
@@ -67,7 +75,7 @@ export default function TrackList({ tracks }) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between bg-base-200 mx-2 gap-2 rounded-md w-11/12">
+      <div className="flex flex-col items-center justify-between bg-base-200 mx-2 gap-2 rounded-md w-11/12 max-h-[575px]">
         <span
           className={`text-2xl text-primary text-center ${amVinylFont.className}`}
         >
@@ -87,40 +95,40 @@ export default function TrackList({ tracks }) {
 
           <ErrorMessageContainer error={errorMessage} />
 
-          {mockTracks.map((track, index, mockTracks) => {
-            return (
-              <div
-                className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
-                key={"jammmTrack-" + index}
-              >
-                <p className="row-span-2 pl-2">{index + 1}: </p>
-                <Track track={track} customClass="col-span-9" />
-                <div className="flex justify-evenly w-full p-2 col-span-9">
-                  {index === 0 ? (
-                    ""
-                  ) : (
-                    <div className="md:tooltip" data-tip="Move up">
-                      <CircleButton icon="up" />
+          <div className="w-full max-h-[350px] overflow-y-auto">
+            {mockTracks.map((track, index, mockTracks) => {
+              return (
+                <div
+                  className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
+                  key={"jammmTrack-" + index}
+                >
+                  <p className="row-span-2 pl-2">{index + 1}: </p>
+                  <Track track={track} customClass="col-span-9" />
+                  <div className="flex justify-evenly w-full p-2 col-span-9">
+                    {index === 0 ? (
+                      ""
+                    ) : (
+                      <div className="md:tooltip" data-tip="Move up">
+                        <CircleButton icon="up" />
+                      </div>
+                    )}
+                    {index + 1 === mockTracks.length ? (
+                      ""
+                    ) : (
+                      <div className="md:tooltip" data-tip="Move down">
+                        <CircleButton icon="down" />
+                      </div>
+                    )}
+                    <div className="md:tooltip" data-tip="Remove">
+                      <CircleButton icon="remove" />
                     </div>
-                  )}
-
-                  {index + 1 === mockTracks.length ? (
-                    ""
-                  ) : (
-                    <div className="md:tooltip" data-tip="Move down">
-                      <CircleButton icon="down" />
-                    </div>
-                  )}
-
-                  <div className="md:tooltip" data-tip="Remove">
-                    <CircleButton icon="remove" />
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
 
-          <div className="flex w-full text-center justify-evenly">
+          <div className="flex w-full text-center text-xs justify-evenly">
             <p>Track count: 9999</p>
             <p>Total time: 999:99</p>
           </div>
