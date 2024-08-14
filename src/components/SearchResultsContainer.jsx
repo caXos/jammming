@@ -1,21 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SearchResults from "./SearchResults";
 import TrackList from "./TrackList";
 
 export default function SearchResultsContainer({ tracks }) {
   const [trackList, setTrackList] = useState([]);
+  const [sortBy, setSortBy] = useState("title");
 
   const addTrack = (track) => {
     setTrackList([...trackList, track]);
   };
 
-  const [sortBy, setSortBy] = useState("title");
-
   const changeSortBy = (desiredSort) => {
     setSortBy(desiredSort);
+  };
+
+  useEffect(() => {
     sortTracks();
-  }
+  }, [sortBy]);
 
   
   const sortTracks = async () => {
