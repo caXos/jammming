@@ -4,6 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useState("");
@@ -14,8 +15,9 @@ export default function Home() {
 
   const validateSearchInput = () => {
     if (!searchParams) {
+      toast.error("Error in the search input!")
       setSearchErrors("You need to type something to search for!");
-      alert("Error in the search input!");
+      // alert("Error in the search input!");
     } else {
       setSearchErrors("");
       alert("Final search string: " + searchParams);

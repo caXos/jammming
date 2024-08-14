@@ -41,7 +41,7 @@ const changeTheme = (event) => {
 export default function ThemeSelectorContainer() {
   return (
     <>
-      <div className="flex flex-col items-center justify-between bg-base-200 mt-2 p-2 rounded-md w-11/12 text-accent">
+      <div className="flex flex-col items-center justify-between bg-base-200 my-2 p-2 rounded-md w-11/12 text-accent">
         <p className="py-4">
           Don&apos;t fancy these colors, hon? Use the menu below to change them!
         </p>
