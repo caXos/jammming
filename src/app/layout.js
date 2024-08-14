@@ -1,8 +1,7 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
-import React from "react";
-import { ToastContainer } from "react-toastify";
 import Icon_Vinyl from "@/components/Icon_Vinyl";
+import { Inter } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "./globals.css";
 
 import "react-toastify/dist/ReactToastify.css";
 
