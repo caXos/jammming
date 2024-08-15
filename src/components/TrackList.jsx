@@ -11,7 +11,13 @@ import Track from "./Track";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
-export default function TrackList({ tracks }) {
+export default function TrackList({
+  tracks,
+  moveTrackUp,
+  moveTrackDown,
+  removeTrack,
+  submitForm,
+}) {
   const [jammmName, setJammmName] = useState("");
   const [totalTime, setTotalTime] = useState("0");
 
@@ -20,7 +26,8 @@ export default function TrackList({ tracks }) {
   };
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (!jammmName) {
       setErrorMessage("You need to input a name for your Playlist!");
       toast.error("Error in the Jammm name input!");
@@ -31,8 +38,8 @@ export default function TrackList({ tracks }) {
   };
 
   useEffect(() => {
-    setTotalTime(calculateTotalTime(tracks))
-  }, [tracks])
+    setTotalTime(calculateTotalTime(tracks));
+  }, [tracks]);
 
   return (
     <>
@@ -57,7 +64,7 @@ export default function TrackList({ tracks }) {
           <ErrorMessageContainer error={errorMessage} />
 
           <div className="w-full max-h-[335px] overflow-y-auto">
-            {tracks.map((track, index, mockTracks) => {
+            {tracks.map((track, index, tracks) => {
               return (
                 <div
                   className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200  rounded-xl"
@@ -69,18 +76,36 @@ export default function TrackList({ tracks }) {
                     {index === 0 ? (
                       ""
                     ) : (
-                      <div className="md:tooltip" data-tip="Move up">
+                      <div
+                        className="md:tooltip"
+                        data-tip="Move up"
+                        onClick={() => {
+                          moveTrackUp(index);
+                        }}
+                      >
                         <CircleButton icon="up" />
                       </div>
                     )}
-                    {index + 1 === mockTracks.length ? (
+                    {index + 1 === tracks.length ? (
                       ""
                     ) : (
-                      <div className="md:tooltip" data-tip="Move down">
+                      <div
+                        className="md:tooltip"
+                        data-tip="Move down"
+                        onClick={() => {
+                          moveTrackDown(index);
+                        }}
+                      >
                         <CircleButton icon="down" />
                       </div>
                     )}
-                    <div className="md:tooltip" data-tip="Remove">
+                    <div
+                      className="md:tooltip"
+                      data-tip="Remove"
+                      onClick={() => {
+                        removeTrack(index);
+                      }}
+                    >
                       <CircleButton icon="remove" />
                     </div>
                   </div>
@@ -97,7 +122,11 @@ export default function TrackList({ tracks }) {
             color="secondary"
             action={handleSubmit}
             disabled={tracks.length === 0 || !jammmName ? true : false}
-            tooltipText={tracks.length === 0 || !jammmName ? "Name your jammm and add some tracks to it!" : "All set to create your jammm!"}
+            tooltipText={
+              tracks.length === 0 || !jammmName
+                ? "Name your jammm and add some tracks to it!"
+                : "All set to create your jammm!"
+            }
           >
             <NoteIcon />
             Create!

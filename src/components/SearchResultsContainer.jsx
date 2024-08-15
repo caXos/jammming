@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import SearchResults from "./SearchResults";
 import TrackList from "./TrackList";
+import { toast } from "react-toastify";
 
 export default function SearchResultsContainer({ tracks }) {
   const [trackList, setTrackList] = useState([]);
@@ -33,6 +34,21 @@ export default function SearchResultsContainer({ tracks }) {
     setTrackList(sortedTracks);
   };
 
+  const moveTrackUp = (index) => {
+    let toastString = `${index}: ${jammmTracks[index].title} up`;
+    toast.info(toastString)
+  }
+  const moveTrackDown = (index) => {
+    let toastString = `${index}: ${jammmTracks[index].title} down`;
+    toast.info(toastString)
+  }
+  const removeTrack = (index) => {
+    let oldArray = [...jammmTracks];
+    oldArray.splice(index, 1);
+    setJammmTracks(oldArray);
+    toast.success("Track removed!")
+  }
+
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
@@ -41,7 +57,7 @@ export default function SearchResultsContainer({ tracks }) {
           addTrack={addTrack}
           changeSortBy={changeSortBy}
         />
-        <TrackList tracks={jammmTracks} />
+        <TrackList tracks={jammmTracks} moveTrackUp={moveTrackUp} moveTrackDown={moveTrackDown} removeTrack={removeTrack} />
       </div>
     </>
   );
