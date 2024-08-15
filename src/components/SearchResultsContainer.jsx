@@ -35,18 +35,42 @@ export default function SearchResultsContainer({ tracks }) {
   };
 
   const moveTrackUp = (index) => {
-    let toastString = `${index}: ${jammmTracks[index].title} up`;
-    toast.info(toastString)
+    if (index > 0) {
+      let tempArray = [...jammmTracks];
+      let tempTrack1 = jammmTracks[index];
+      let tempTrack2 = jammmTracks[index-1];
+      tempArray[index-1] = tempTrack1;
+      tempArray[index] = tempTrack2;
+      setJammmTracks(tempArray)
+      toast.success("Moved track up!")
+    } else {
+      toast.error("Cannot move this track up, it is the first!")
+    }
   }
+
   const moveTrackDown = (index) => {
-    let toastString = `${index}: ${jammmTracks[index].title} down`;
-    toast.info(toastString)
+    if (index < jammmTracks.length) {
+      let tempArray = [...jammmTracks];
+      let tempTrack1 = jammmTracks[index];
+      let tempTrack2 = jammmTracks[index+1];
+      tempArray[index+1] = tempTrack1;
+      tempArray[index] = tempTrack2;
+      setJammmTracks(tempArray)
+      toast.success("Moved track down!")
+    } else {
+      toast.error("Cannot move this track down, it is the last!")
+    }
   }
   const removeTrack = (index) => {
-    let oldArray = [...jammmTracks];
-    oldArray.splice(index, 1);
-    setJammmTracks(oldArray);
+    let newArray = [...jammmTracks];
+    newArray.splice(index, 1);
+    setJammmTracks(newArray);
     toast.success("Track removed!")
+  }
+
+  const submitForm = (jammmName) => {
+    toast.info("Submiting Form!")
+    console.log(jammmName, jammmTracks)
   }
 
   return (
@@ -57,7 +81,7 @@ export default function SearchResultsContainer({ tracks }) {
           addTrack={addTrack}
           changeSortBy={changeSortBy}
         />
-        <TrackList tracks={jammmTracks} moveTrackUp={moveTrackUp} moveTrackDown={moveTrackDown} removeTrack={removeTrack} />
+        <TrackList tracks={jammmTracks} moveTrackUp={moveTrackUp} moveTrackDown={moveTrackDown} removeTrack={removeTrack} submitForm={submitForm} />
       </div>
     </>
   );

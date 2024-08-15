@@ -26,14 +26,13 @@ export default function TrackList({
   };
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (!jammmName) {
       setErrorMessage("You need to input a name for your Playlist!");
       toast.error("Error in the Jammm name input!");
     } else {
       setErrorMessage("");
-      toast.info("Creating Jamm with name: " + jammmName);
+      submitForm(jammmName)
     }
   };
 

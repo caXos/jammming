@@ -20,7 +20,7 @@ export default function Home() {
       // alert("Error in the search input!");
     } else {
       setSearchErrors("");
-      alert("Final search string: " + searchParams);
+      toast.warning("Final search string: " + searchParams);
       setTracks(mockTracks) // Make request to Spotify's API
     }
   };
