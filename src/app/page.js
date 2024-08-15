@@ -5,6 +5,7 @@ import SearchResultsContainer from "@/components/SearchResultsContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useState("");
@@ -58,6 +59,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-start gap-4 bg-base-100">
       <Hero />
+      <SpotifyLoginContainer />
       <SearchBar
         searchParams={searchParams}
         handleSearchInput={handleSearchInput}
