@@ -3,9 +3,10 @@ import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
+import { spotifyLogin } from "@/methods/spotifyApis";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useState("");
@@ -16,13 +17,13 @@ export default function Home() {
 
   const validateSearchInput = () => {
     if (!searchParams) {
-      toast.error("Error in the search input!")
+      toast.error("Error in the search input!");
       setSearchErrors("You need to type something to search for!");
       // alert("Error in the search input!");
     } else {
       setSearchErrors("");
       toast.warning("Final search string: " + searchParams);
-      setTracks(mockTracks) // Make request to Spotify's API
+      setTracks(mockTracks); // Make request to Spotify's API
     }
   };
 
@@ -49,17 +50,29 @@ export default function Home() {
     },
     {
       title: "Título 3",
-      artist:
-        "Artista 3",
+      artist: "Artista 3",
       album: "Album 3",
       time: "03:03",
     },
   ];
 
+  const [spotifyUser, setSpotifyUser] = useState(null);
+  const getSpotifyUser = async () => {
+    setSpotifyUser(await spotifyLogin())
+  };
+
+  useEffect(() => {
+    let windowUri = window.location.href;
+    if (windowUri.includes("access_token")) {
+      getSpotifyUser();
+      toast.success("Logged to Spotify!");
+    }
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-start gap-4 bg-base-100">
       <Hero />
-      <SpotifyLoginContainer />
+      <SpotifyLoginContainer spotifyUser={spotifyUser} />
       <SearchBar
         searchParams={searchParams}
         handleSearchInput={handleSearchInput}

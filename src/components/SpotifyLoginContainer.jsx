@@ -1,27 +1,13 @@
 "use client";
+import { spotifyAuthorize } from "@/methods/spotifyApis";
 import localFont from "next/font/local";
-import { spotifyLogin } from "@/methods/spotifyApis";
-import { useState } from "react";
+import Button from "./Button";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
-export default function SpotifyLoginContainer() {
-  // window.spotifyCallback = (payload) => {
-  //   popup.close()
-  //   fetch('https://api.spotify.com/v1/me', {
-  //     headers: {
-  //       'Authorization': `Bearer ${payload}`
-  //     }
-  //   }).then(response => {
-  //     return response.json()
-  //   }).then(data => {
-  //     // do something with data
-  //     console.log(data, 'success')
-  //   })
-  // }
-
-  const handleClick = async () => {
-    spotifyLogin();
+export default function SpotifyLoginContainer({ spotifyUser }) {
+  const handleClick = () => {
+    spotifyAuthorize();
   };
 
   return (
@@ -32,9 +18,9 @@ export default function SpotifyLoginContainer() {
         >
           First, tell us who you are
         </span>
-        <button type="button" onClick={handleClick}>
-          Teste login
-        </button>
+        <Button action={handleClick}>Log in to Spotify</Button>
+
+        {spotifyUser ? <div>{spotifyUser.display_name}</div> : ""}
       </div>
     </>
   );
