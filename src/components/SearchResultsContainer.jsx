@@ -21,7 +21,7 @@ export default function SearchResultsContainer({ tracks }) {
   }, [sortBy]);
 
   
-  const sortTracks = async () => {
+  const sortTracks = () => {
     const sortedTracks = [...tracks];
     sortedTracks.sort((t1, t2) => {
       let t1LowerCase = t1[sortBy].toLowerCase();

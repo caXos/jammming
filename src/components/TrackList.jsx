@@ -1,12 +1,13 @@
 "use client";
+import calculateTotalTime from "@/methods/calculateTotalTime";
 import localFont from "next/font/local";
-import Track from "./Track";
-import CircleButton from "./CircleButton";
-import Button from "./Button";
-import NoteIcon from "./Icon_Note";
-import { useState, useEffect } from "react";
-import ErrorMessageContainer from "./ErrorMessageContainer";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Button from "./Button";
+import CircleButton from "./CircleButton";
+import ErrorMessageContainer from "./ErrorMessageContainer";
+import NoteIcon from "./Icon_Note";
+import Track from "./Track";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -29,48 +30,8 @@ export default function TrackList({ tracks }) {
     }
   };
 
-
-  const calculateTotalTime = () => {
-    let hours = 0, minutes = 0, seconds = 0;
-    const timeStrings = [];
-    tracks.forEach((track) => {
-      let splitString = track.time.split(":");
-      if (splitString.length === 1) {
-        seconds += Number(splitString[0])
-      } else {
-        if (splitString.length === 2) {
-          seconds += Number(splitString[1])
-          minutes += Number(splitString[0])
-        } else {
-          seconds += Number(splitString[2])
-          minutes += Number(splitString[1])
-          hours += Number(splitString[0])
-        }
-      }
-      timeStrings.push(track.time);
-    })
-    hours *= 60 * 60;
-    minutes *= 60;
-    let totalTime = hours + minutes + seconds;
-    const hrs = ~~(totalTime / 3600);
-    const mins = ~~((totalTime % 3600) / 60);
-    const secs = ~~totalTime % 60;
-  
-    // Output like "1:01" or "4:03:59" or "123:03:59"
-    let ret = "";
-  
-    if (hrs > 0) {
-      ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
-    }
-  
-    ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-    ret += "" + secs;
-    
-    return ret;
-  }
-
   useEffect(() => {
-    setTotalTime(calculateTotalTime)
+    setTotalTime(calculateTotalTime(tracks))
   }, [tracks])
 
   return (
@@ -99,7 +60,7 @@ export default function TrackList({ tracks }) {
             {tracks.map((track, index, mockTracks) => {
               return (
                 <div
-                  className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200 "
+                  className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200  rounded-xl"
                   key={"jammmTrack-" + index}
                 >
                   <p className="row-span-2 pl-2">{index + 1}: </p>
