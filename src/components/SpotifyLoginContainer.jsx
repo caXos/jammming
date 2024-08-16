@@ -13,14 +13,27 @@ export default function SpotifyLoginContainer({ spotifyUser }) {
   return (
     <>
       <div className="flex flex-col items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
-        <span
-          className={`text-2xl text-primary text-center ${amVinylFont.className}`}
-        >
-          First, tell us who you are
-        </span>
-        <Button action={handleClick}>Log in to Spotify</Button>
-
-        {spotifyUser ? <div>{spotifyUser.display_name}</div> : ""}
+        {!spotifyUser ? (
+          <>
+            <span
+              className={`text-2xl text-primary text-center ${amVinylFont.className}`}
+            >
+              First, tell us who you are
+            </span>
+            <Button action={handleClick}>Log in to Spotify</Button>
+          </>
+        ) : (
+          <>
+            <span
+              className={`text-2xl text-primary text-center ${amVinylFont.className}`}
+            >
+              Spotify User
+            </span>
+            <span className="text-accent">
+              {spotifyUser ? <div>{spotifyUser.display_name}</div> : ""}
+            </span>
+          </>
+        )}
       </div>
     </>
   );

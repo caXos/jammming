@@ -55,5 +55,6 @@ export async function spotifyLogin() {
   });
   const responseJson = await response.json();
   // console.log(responseJson);
+  window.history.replaceState(null, "", redirect_uri)
   return responseJson;
 }

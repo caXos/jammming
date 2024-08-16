@@ -2,11 +2,11 @@
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
+import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
+import { spotifyLogin } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
-import { spotifyLogin } from "@/methods/spotifyApis";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useState("");
@@ -19,7 +19,6 @@ export default function Home() {
     if (!searchParams) {
       toast.error("Error in the search input!");
       setSearchErrors("You need to type something to search for!");
-      // alert("Error in the search input!");
     } else {
       setSearchErrors("");
       toast.warning("Final search string: " + searchParams);
@@ -58,7 +57,7 @@ export default function Home() {
 
   const [spotifyUser, setSpotifyUser] = useState(null);
   const getSpotifyUser = async () => {
-    setSpotifyUser(await spotifyLogin())
+    setSpotifyUser(await spotifyLogin());
   };
 
   useEffect(() => {
@@ -73,13 +72,19 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-start gap-4 bg-base-100">
       <Hero />
       <SpotifyLoginContainer spotifyUser={spotifyUser} />
-      <SearchBar
-        searchParams={searchParams}
-        handleSearchInput={handleSearchInput}
-        validateSearchInput={validateSearchInput}
-        errorMessage={searchErrors}
-      />
-      <SearchResultsContainer tracks={tracks} />
+      {!spotifyUser ? (
+        ""
+      ) : (
+        <>
+          <SearchBar
+            searchParams={searchParams}
+            handleSearchInput={handleSearchInput}
+            validateSearchInput={validateSearchInput}
+            errorMessage={searchErrors}
+          />
+          <SearchResultsContainer tracks={tracks} />
+        </>
+      )}
       <ThemeSelectorContainer />
     </main>
   );
