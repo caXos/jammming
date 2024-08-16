@@ -25,7 +25,7 @@ export default function SearchResults({ tracks, addTrack, changeSortBy }) {
         </span>
         <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full text-accent">
           <span
-            className={`text-2xl text-primary text-center ${amVinylFont.className}`}
+            className="text-accent text-center"
           >
             Try searching somethin&apos;
           </span>

@@ -4,7 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
-import { spotifyLogin } from "@/methods/spotifyApis";
+import { spotifyLogin, getTracks } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -15,13 +15,14 @@ export default function Home() {
   };
   const [searchErrors, setSearchErrors] = useState("");
 
-  const validateSearchInput = () => {
+  const validateSearchInput = async () => {
     if (!searchParams) {
       toast.error("Error in the search input!");
       setSearchErrors("You need to type something to search for!");
     } else {
       setSearchErrors("");
       toast.warning("Final search string: " + searchParams);
+      getTracks(searchParams);
       setTracks(mockTracks); // Make request to Spotify's API
     }
   };

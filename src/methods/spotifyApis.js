@@ -47,6 +47,10 @@ export async function spotifyAuthorize() {
 export async function spotifyLogin() {
   let params = getHashParams();
   let access_token = params.access_token;
+  localStorage.setItem(stateKey, access_token);
+  console.log(params)
+let teste = localStorage.getItem(stateKey)
+console.log('teste ', teste)
 
   const response = await fetch("https://api.spotify.com/v1/me", {
     headers: {
@@ -54,7 +58,21 @@ export async function spotifyLogin() {
     },
   });
   const responseJson = await response.json();
-  // console.log(responseJson);
+  // console.log(responseJson); // treat if error
   window.history.replaceState(null, "", redirect_uri)
   return responseJson;
+}
+
+export async function getTracks(searchString) {
+  let uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=album,artist,track`
+  let access_token = localStorage.getItem(stateKey);
+
+  let response = await fetch(uri, {
+    headers: {
+      Authorization: "Bearer " + access_token
+    }
+  })
+  console.log(response); // treat if error
+  let responseJson = await response.json();
+  console.log(responseJson)
 }
