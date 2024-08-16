@@ -21,51 +21,24 @@ export default function Home() {
       setSearchErrors("You need to type something to search for!");
     } else {
       setSearchErrors("");
-      toast.warning("Final search string: " + searchParams);
-      getTracks(searchParams);
-      setTracks(mockTracks); // Make request to Spotify's API
+      toast.warning("Final search string: " + searchParams); // Change this toast to a promise toast
+      const spotifyTracks = await getTracks(searchParams);
+      setTracks(spotifyTracks);
     }
   };
 
   const [tracks, setTracks] = useState([]);
 
-  const mockTracks = [
-    {
-      title: "Título AAA",
-      artist: "Artista CCC",
-      album: "Album 0",
-      time: "03:00",
-    },
-    {
-      title: "Título CCC",
-      artist: "Artista AAA",
-      album: "Album 1",
-      time: "03:01",
-    },
-    {
-      title: "Título BBB",
-      artist: "Artista BBB",
-      album: "Album 2",
-      time: "03:02",
-    },
-    {
-      title: "Título 3",
-      artist: "Artista 3",
-      album: "Album 3",
-      time: "03:03",
-    },
-  ];
-
   const [spotifyUser, setSpotifyUser] = useState(null);
   const getSpotifyUser = async () => {
-    setSpotifyUser(await spotifyLogin());
+      setSpotifyUser(await spotifyLogin());
+      toast.success("Logged to Spotify!");
   };
 
   useEffect(() => {
     let windowUri = window.location.href;
     if (windowUri.includes("access_token")) {
       getSpotifyUser();
-      toast.success("Logged to Spotify!");
     }
   }, []);
 

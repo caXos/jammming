@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 const stateKey = "spotify_auth_state";
 const client_id = "34643a9bb95144ee936c43a5cf863256";
 const redirect_uri = "http://localhost:3000/";
@@ -48,31 +49,42 @@ export async function spotifyLogin() {
   let params = getHashParams();
   let access_token = params.access_token;
   localStorage.setItem(stateKey, access_token);
-  console.log(params)
-let teste = localStorage.getItem(stateKey)
-console.log('teste ', teste)
+  
+  let teste = localStorage.getItem(stateKey);
 
   const response = await fetch("https://api.spotify.com/v1/me", {
     headers: {
       Authorization: "Bearer " + access_token,
     },
   });
+
   const responseJson = await response.json();
-  // console.log(responseJson); // treat if error
-  window.history.replaceState(null, "", redirect_uri)
-  return responseJson;
+
+  if (response.ok) {
+    window.history.replaceState(null, "", redirect_uri);
+
+    return responseJson;
+  } else {
+    toast.error("Spotify login error: " + responseJson.error.message);
+  }
 }
 
 export async function getTracks(searchString) {
-  let uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=album,artist,track`
-  let access_token = localStorage.getItem(stateKey);
+  // const uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=album,artist,track`;
+  const uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=track&limit=50`;
+  const access_token = localStorage.getItem(stateKey);
 
-  let response = await fetch(uri, {
+  const response = await fetch(uri, {
     headers: {
-      Authorization: "Bearer " + access_token
-    }
-  })
-  console.log(response); // treat if error
-  let responseJson = await response.json();
-  console.log(responseJson)
+      Authorization: "Bearer " + access_token,
+    },
+  });
+
+  const responseJson = await response.json();
+  if (response.ok) {
+
+    return responseJson.tracks.items;
+  } else {
+    toast.error("Spotify search error: " + responseJson.error.message);
+  }
 }

@@ -44,23 +44,25 @@ export default function SearchResults({ tracks, addTrack, changeSortBy }) {
           <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full">
             <span className="text-accent">Sort by:</span>
             <SortRadios sortTracks={sortTracks} />
-            {tracks.map((track, index) => {
-              return (
-                <div
-                  key={index}
-                  className="w-full flex items-center py-2 hover:bg-base-200 rounded-md p-2"
-                >
-                  <Track track={track} />
+            <div className="w-full max-h-[335px] overflow-y-auto">
+              {tracks.map((track, index) => {
+                return (
                   <div
-                    className="md:tooltip"
-                    data-tip="Add to tracklist"
-                    onClick={() => handleAddButtonClick(track)}
+                    key={index}
+                    className="w-full flex items-center py-2 hover:bg-base-200 rounded-md p-2"
                   >
-                    <CircleButton icon="add" />
+                    <Track track={track} />
+                    <div
+                      className="md:tooltip"
+                      data-tip="Add to tracklist"
+                      onClick={() => handleAddButtonClick(track)}
+                    >
+                      <CircleButton icon="add" />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </>
