@@ -49,7 +49,7 @@ export async function spotifyLogin() {
   let params = getHashParams();
   let access_token = params.access_token;
   localStorage.setItem(stateKey, access_token);
-  
+
   let teste = localStorage.getItem(stateKey);
 
   const response = await fetch("https://api.spotify.com/v1/me", {
@@ -76,15 +76,17 @@ export async function getTracks(searchString) {
 
   const response = await fetch(uri, {
     headers: {
-      Authorization: "Bearer " + access_token,
+      Authorization: `Bearer ${access_token}`,
     },
   });
 
   const responseJson = await response.json();
   if (response.ok) {
-
-    return responseJson.tracks.items;
+    return responseJson;
   } else {
     toast.error("Spotify search error: " + responseJson.error.message);
   }
 }
+
+export async function getNextTracks(uri) {}
+export async function getPreviousTracks(uri) {}

@@ -24,9 +24,7 @@ export default function SearchResults({ tracks, addTrack, changeSortBy }) {
           No Tunes found yet, mon!
         </span>
         <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full text-accent">
-          <span
-            className="text-accent text-center"
-          >
+          <span className="text-accent text-center">
             Try searching somethin&apos;
           </span>
         </div>
@@ -44,7 +42,7 @@ export default function SearchResults({ tracks, addTrack, changeSortBy }) {
           <div className="flex flex-col items-center justify-evenly bg-base-300 p-2 gap-2 rounded-2xl w-full">
             <span className="text-accent">Sort by:</span>
             <SortRadios sortTracks={sortTracks} />
-            <div className="w-full max-h-[335px] overflow-y-auto">
+            <div className="w-full max-h-[335px] overflow-y-auto overflow-x-clip">
               {tracks.map((track, index) => {
                 return (
                   <div

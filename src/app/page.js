@@ -23,7 +23,8 @@ export default function Home() {
       setSearchErrors("");
       toast.warning("Final search string: " + searchParams); // Change this toast to a promise toast
       const spotifyTracks = await getTracks(searchParams);
-      setTracks(spotifyTracks);
+      setTracks(spotifyTracks.tracks.items);
+      console.log(spotifyTracks);
     }
   };
 
@@ -31,8 +32,8 @@ export default function Home() {
 
   const [spotifyUser, setSpotifyUser] = useState(null);
   const getSpotifyUser = async () => {
-      setSpotifyUser(await spotifyLogin());
-      toast.success("Logged to Spotify!");
+    setSpotifyUser(await spotifyLogin());
+    toast.success("Logged to Spotify!");
   };
 
   useEffect(() => {
