@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import Track from "./Track";
 import CircleButton from "./CircleButton";
 import SortRadios from "./SortRadios";
+import SearchPagination from "./SearchPagination";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -61,6 +62,7 @@ export default function SearchResults({ tracks, addTrack, changeSortBy }) {
                 );
               })}
             </div>
+            <SearchPagination />
           </div>
         </div>
       </>
