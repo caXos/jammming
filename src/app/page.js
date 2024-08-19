@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     let windowUri = window.location.href;
-    if (windowUri.includes("access_token")) {
+    if (windowUri.includes("access_token") && !spotifyUser) {
       getSpotifyUser();
     }
   }, []);
@@ -73,7 +73,6 @@ export default function Home() {
             previousTracksUri={previousTracksUri}
             setPreviousTracksUri={setPreviousTracksUri}
             totalTracks={totalTracks}
-            setTotalTracks={setTotalTracks}
             offset={offset}
             setOffset={setOffset}
           />

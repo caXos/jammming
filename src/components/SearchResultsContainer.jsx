@@ -1,6 +1,6 @@
 "use client";
 import { sortTracks } from "@/methods/sortTracks";
-import { getNextTracks } from "@/methods/spotifyApis";
+import { getNextTracks, getPreviousTracks } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SearchResults from "./SearchResults";
@@ -13,7 +13,6 @@ export default function SearchResultsContainer({
   previousTracksUri,
   setPreviousTracksUri,
   totalTracks,
-  setTotalTracks,
   offset,
   setOffset,
 }) {
@@ -92,9 +91,16 @@ export default function SearchResultsContainer({
     setNextTracksUri(searchNextResponse.tracks.next);
     setOffset(searchNextResponse.tracks.offset);
   };
-
-  const searchPreviousTracks = () => {
+  
+  const searchPreviousTracks = async () => {
+    setTrackList(new Array());
     toast.info("Clicked to search previous tracks");
+    const searchNextResponse = await getPreviousTracks(previousTracksUri);
+    const newlyFoundTracks = searchNextResponse.tracks.items;
+    setTrackList(newlyFoundTracks);
+    setPreviousTracksUri(searchNextResponse.tracks.previous);
+    setNextTracksUri(searchNextResponse.tracks.next);
+    setOffset(searchNextResponse.tracks.offset);
   };
 
   return (
@@ -104,9 +110,7 @@ export default function SearchResultsContainer({
         addTrack={addTrack}
         changeSortBy={changeSortBy}
         offset={offset}
-        setOffset={setOffset}
         totalTracks={totalTracks}
-        setTotalTracks={setTotalTracks}
         showNextTracksButton={nextTracksUri ? true : false}
         showPreviousTracksButton={previousTracksUri ? true : false}
         searchNextTracks={searchNextTracks}

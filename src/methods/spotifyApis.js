@@ -89,7 +89,6 @@ export async function getTracks(searchString) {
 }
 
 export async function getNextTracks(uri) {
-  console.log(uri);
   const access_token = localStorage.getItem(stateKey);
   const response = await fetch(uri, {
     headers: {
@@ -103,4 +102,17 @@ export async function getNextTracks(uri) {
     toast.error("Spotify search error: " + responseJson.error.message);
   }
 }
-export async function getPreviousTracks(uri) {}
+export async function getPreviousTracks(uri) {
+  const access_token = localStorage.getItem(stateKey);
+  const response = await fetch(uri, {
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+  });
+  const responseJson = await response.json();
+  if (response.ok) {
+    return responseJson;
+  } else {
+    toast.error("Spotify search error: " + responseJson.error.message);
+  }
+}
