@@ -19,8 +19,10 @@ export default function SearchResultsContainer({
   const [trackList, setTrackList] = useState([]);
   const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     sortResults();
   }, [sortBy]);
 
@@ -40,6 +42,7 @@ export default function SearchResultsContainer({
       sortTracks([...foundTracks], sortBy);
     }
     setTrackList(sortedTracks);
+    setIsLoading(false);
   };
 
   const moveTrackUp = (index) => {
@@ -82,6 +85,7 @@ export default function SearchResultsContainer({
   };
 
   const searchNextTracks = async () => {
+    setIsLoading(true);
     setTrackList(new Array());
     toast.info("Clicked to search next tracks");
     const searchNextResponse = await getNextTracks(nextTracksUri);
@@ -90,9 +94,12 @@ export default function SearchResultsContainer({
     setPreviousTracksUri(searchNextResponse.tracks.previous);
     setNextTracksUri(searchNextResponse.tracks.next);
     setOffset(searchNextResponse.tracks.offset);
+    setIsLoading(false);
+
   };
   
   const searchPreviousTracks = async () => {
+    setIsLoading(true);
     setTrackList(new Array());
     toast.info("Clicked to search previous tracks");
     const searchNextResponse = await getPreviousTracks(previousTracksUri);
@@ -101,6 +108,7 @@ export default function SearchResultsContainer({
     setPreviousTracksUri(searchNextResponse.tracks.previous);
     setNextTracksUri(searchNextResponse.tracks.next);
     setOffset(searchNextResponse.tracks.offset);
+    setIsLoading(false);
   };
 
   return (
@@ -115,6 +123,7 @@ export default function SearchResultsContainer({
         showPreviousTracksButton={previousTracksUri ? true : false}
         searchNextTracks={searchNextTracks}
         searchPreviousTracks={searchPreviousTracks}
+        isLoading={isLoading}
       />
       <TrackList
         jammmtracks={jammmTracks}
