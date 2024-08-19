@@ -1,18 +1,29 @@
 "use client";
 import { sortTracks } from "@/methods/sortTracks";
+import { getNextTracks } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SearchResults from "./SearchResults";
 import TrackList from "./TrackList";
 
-export default function SearchResultsContainer({ tracks, searchResponse }) {
+export default function SearchResultsContainer({
+  foundTracks,
+  nextTracksUri,
+  setNextTracksUri,
+  previousTracksUri,
+  setPreviousTracksUri,
+  totalTracks,
+  setTotalTracks,
+  offset,
+  setOffset,
+}) {
   const [trackList, setTrackList] = useState([]);
   const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
-  const [nexTracksUri, setNextTracksUri] = useState("");
-  const [previousTracksUri, setPreviousTracksUri] = useState("");
-  const [offset, setOffset] = useState(0);
-  const [totalTracks, setTotalTracks] = useState(totalTracksFound);
+
+  useEffect(() => {
+    sortResults();
+  }, [sortBy]);
 
   const addTrack = (track) => {
     setJammmTracks([...jammmTracks, track]);
@@ -22,12 +33,13 @@ export default function SearchResultsContainer({ tracks, searchResponse }) {
     setSortBy(desiredSort);
   };
 
-  useEffect(() => {
-    sortResults();
-  }, [sortBy]);
-
   const sortResults = () => {
-    const sortedTracks = sortTracks([...tracks], sortBy);
+    const sortedTracks = [];
+    if (trackList.length > 0) {
+      sortTracks([...trackList], sortBy);
+    } else {
+      sortTracks([...foundTracks], sortBy);
+    }
     setTrackList(sortedTracks);
   };
 
@@ -70,17 +82,38 @@ export default function SearchResultsContainer({ tracks, searchResponse }) {
     console.log(jammmName, jammmTracks);
   };
 
+  const searchNextTracks = async () => {
+    setTrackList(new Array());
+    toast.info("Clicked to search next tracks");
+    const searchNextResponse = await getNextTracks(nextTracksUri);
+    const newlyFoundTracks = searchNextResponse.tracks.items;
+    setTrackList(newlyFoundTracks);
+    setPreviousTracksUri(searchNextResponse.tracks.previous);
+    setNextTracksUri(searchNextResponse.tracks.next);
+    setOffset(searchNextResponse.tracks.offset);
+  };
+
+  const searchPreviousTracks = () => {
+    toast.info("Clicked to search previous tracks");
+  };
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
       <SearchResults
-        tracks={trackList.length > 0 ? trackList : tracks}
+        tracks={trackList.length > 0 ? trackList : foundTracks} // Change this to foundTracks
         addTrack={addTrack}
         changeSortBy={changeSortBy}
         offset={offset}
+        setOffset={setOffset}
         totalTracks={totalTracks}
+        setTotalTracks={setTotalTracks}
+        showNextTracksButton={nextTracksUri ? true : false}
+        showPreviousTracksButton={previousTracksUri ? true : false}
+        searchNextTracks={searchNextTracks}
+        searchPreviousTracks={searchPreviousTracks}
       />
       <TrackList
-        tracks={jammmTracks} // change thist prop to jammmtracks
+        jammmtracks={jammmTracks}
         moveTrackUp={moveTrackUp}
         moveTrackDown={moveTrackDown}
         removeTrack={removeTrack}

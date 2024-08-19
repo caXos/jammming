@@ -1,28 +1,47 @@
 import CircleButton from "./CircleButton";
 
-export default function SearchPagination({showingTracks, totalTracks, leftButtonAction, rigtButtonAction}) {
-    const handleLeftButtonClick = () => {
-
-    }
-
-    const handleRightButtonClick = () => {
-
-    }
-
+export default function SearchPagination({
+  showingTracks,
+  totalTracks,
+  showLeftButton = false,
+  leftButtonAction,
+  showRightButton = false,
+  rightButtonAction,
+}) {
   return (
     <div
       className="w-full flex flex-row justify-evenly text-accent"
-      title={`Showing ${showingTracks} of ${totalTracks} results`}
+      title={`Showing ${showingTracks + 1} - ${
+        50 + showingTracks
+      } of ${totalTracks} results`}
     >
-      <div className="md:tooltip" data-tip="Get previous tracks">
-        <CircleButton icon="left" />
+      {!showLeftButton ? (
+        ""
+      ) : (
+        <div
+          className="md:tooltip"
+          data-tip="Get previous tracks"
+          onClick={() => leftButtonAction()}
+        >
+          <CircleButton icon="left" />
+        </div>
+      )}
+
+      <div className="text-center">
+        {showingTracks + 1} - {50 + showingTracks} of {totalTracks}
       </div>
 
-      <div className="text-center">{showingTracks} of {totalTracks}</div>
-
-      <div className="md:tooltip" data-tip="Get next tracks">
-        <CircleButton icon="right" />
-      </div>
+      {!showRightButton ? (
+        ""
+      ) : (
+        <div
+          className="md:tooltip"
+          data-tip="Get next tracks"
+          onClick={() => rightButtonAction()}
+        >
+          <CircleButton icon="right" />
+        </div>
+      )}
     </div>
   );
 }

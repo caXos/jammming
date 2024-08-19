@@ -12,7 +12,7 @@ import Track from "./Track";
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
 export default function TrackList({
-  tracks,
+  jammmtracks,
   moveTrackUp,
   moveTrackDown,
   removeTrack,
@@ -32,13 +32,13 @@ export default function TrackList({
       toast.error("Error in the Jammm name input!");
     } else {
       setErrorMessage("");
-      submitForm(jammmName)
+      submitForm(jammmName);
     }
   };
 
   useEffect(() => {
-    setTotalTime(calculateTotalTime(tracks));
-  }, [tracks]);
+    setTotalTime(calculateTotalTime(jammmtracks));
+  }, [jammmtracks]);
 
   return (
     <>
@@ -63,7 +63,7 @@ export default function TrackList({
           <ErrorMessageContainer error={errorMessage} />
 
           <div className="w-full max-h-[335px] overflow-y-auto">
-            {tracks.map((track, index, tracks) => {
+            {jammmtracks.map((track, index, jammmtracks) => {
               return (
                 <div
                   className="w-full grid grid-cols-10 justify-between items-center hover:bg-base-200  rounded-xl"
@@ -85,7 +85,7 @@ export default function TrackList({
                         <CircleButton icon="up" />
                       </div>
                     )}
-                    {index + 1 === tracks.length ? (
+                    {index + 1 === jammmtracks.length ? (
                       ""
                     ) : (
                       <div
@@ -114,15 +114,15 @@ export default function TrackList({
           </div>
 
           <div className="flex w-full text-center text-xs justify-evenly">
-            <p>Track count: {tracks.length}</p>
+            <p>Track count: {jammmtracks.length}</p>
             <p>Total time: {totalTime}</p>
           </div>
           <Button
             color="secondary"
             action={handleSubmit}
-            disabled={tracks.length === 0 || !jammmName ? true : false}
+            disabled={jammmtracks.length === 0 || !jammmName ? true : false}
             tooltipText={
-              tracks.length === 0 || !jammmName
+              jammmtracks.length === 0 || !jammmName
                 ? "Name your jammm and add some tracks to it!"
                 : "All set to create your jammm!"
             }

@@ -10,10 +10,20 @@ import { toast } from "react-toastify";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useState("");
-  const [tracks, setTracks] = useState([]);
-  const [searchResponse, setSearchResponse] = useState(null)
+  const [foundTracks, setFoundTracks] = useState([]);
   const [searchErrors, setSearchErrors] = useState("");
   const [spotifyUser, setSpotifyUser] = useState(null);
+  const [nextTracksUri, setNextTracksUri] = useState("");
+  const [previousTracksUri, setPreviousTracksUri] = useState("");
+  const [totalTracks, setTotalTracks] = useState(0);
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    let windowUri = window.location.href;
+    if (windowUri.includes("access_token")) {
+      getSpotifyUser();
+    }
+  }, []);
 
   const handleSearchInput = (event) => {
     setSearchParams(event.target.value);
@@ -27,23 +37,20 @@ export default function Home() {
       setSearchErrors("");
       toast.warning("Searching: " + searchParams); // Change this toast to a promise toast
       const searchResponse = await getTracks(searchParams);
-      // setTracks(searchResponse.tracks.items);
-      setSearchResponse(searchResponse);
-      console.log(searchResponse);
+      setFoundTracks(searchResponse.tracks.items);
+      setNextTracksUri(searchResponse.tracks.next);
+      setPreviousTracksUri(searchResponse.tracks.previous);
+      setOffset(searchResponse.tracks.offset);
+      setTotalTracks(searchResponse.tracks.total);
     }
   };
 
   const getSpotifyUser = async () => {
     setSpotifyUser(await spotifyLogin());
-    toast.success("Logged to Spotify!");
+    toast.success("Logged to Spotify!", {
+      toastId: "loginSuccessToast",
+    });
   };
-
-  useEffect(() => {
-    let windowUri = window.location.href;
-    if (windowUri.includes("access_token")) {
-      getSpotifyUser();
-    }
-  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-start gap-4 bg-base-100">
@@ -59,13 +66,17 @@ export default function Home() {
             validateSearchInput={validateSearchInput}
             errorMessage={searchErrors}
           />
-          {/* <SearchResultsContainer
-            tracks={tracks}
-            nextTracksUri={firstSearchResponse.tracks.next}
-            totalTracksFound={firstSearchResponse.tracks.total}
-          /> */}
-          {/* <SearchResultsContainer tracks={tracks}  /> */}
-          <SearchResultsContainer searchResponse={searchResponse}  />
+          <SearchResultsContainer
+            foundTracks={foundTracks}
+            nextTracksUri={nextTracksUri}
+            setNextTracksUri={setNextTracksUri}
+            previousTracksUri={previousTracksUri}
+            setPreviousTracksUri={setPreviousTracksUri}
+            totalTracks={totalTracks}
+            setTotalTracks={setTotalTracks}
+            offset={offset}
+            setOffset={setOffset}
+          />
         </>
       )}
       <ThemeSelectorContainer />

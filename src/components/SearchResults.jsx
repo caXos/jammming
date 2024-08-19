@@ -1,12 +1,22 @@
 import localFont from "next/font/local";
-import Track from "./Track";
 import CircleButton from "./CircleButton";
-import SortRadios from "./SortRadios";
 import SearchPagination from "./SearchPagination";
+import SortRadios from "./SortRadios";
+import Track from "./Track";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
-export default function SearchResults({ tracks, addTrack, changeSortBy, offset, totalTracks }) {
+export default function SearchResults({
+  tracks,
+  addTrack,
+  changeSortBy,
+  showNextTracksButton = false,
+  showPreviousTracksButton = false,
+  offset,
+  totalTracks,
+  searchNextTracks,
+  searchPreviousTracks,
+}) {
   const handleAddButtonClick = (track) => {
     addTrack(track);
   };
@@ -62,7 +72,14 @@ export default function SearchResults({ tracks, addTrack, changeSortBy, offset, 
                 );
               })}
             </div>
-            <SearchPagination showingTracks={offset} totalTracks={totalTracks} />
+            <SearchPagination
+              showingTracks={offset}
+              totalTracks={totalTracks}
+              showLeftButton={showPreviousTracksButton}
+              leftButtonAction={searchPreviousTracks}
+              showRightButton={showNextTracksButton}
+              rightButtonAction={searchNextTracks}
+            />
           </div>
         </div>
       </>
