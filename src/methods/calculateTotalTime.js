@@ -1,25 +1,10 @@
 export default function calculateTotalTime(tracks) {
-    let hours = 0, minutes = 0, seconds = 0;
-    const timeStrings = [];
+    let totalTime = 0;
     tracks.forEach((track) => {
-      let splitString = track.time.split(":");
-      if (splitString.length === 1) {
-        seconds += Number(splitString[0])
-      } else {
-        if (splitString.length === 2) {
-          seconds += Number(splitString[1])
-          minutes += Number(splitString[0])
-        } else {
-          seconds += Number(splitString[2])
-          minutes += Number(splitString[1])
-          hours += Number(splitString[0])
-        }
-      }
-      timeStrings.push(track.time);
+      totalTime += track.duration_ms;
     })
-    hours *= 60 * 60;
-    minutes *= 60;
-    let totalTime = hours + minutes + seconds;
+    totalTime /= 1000;
+    
     const hrs = ~~(totalTime / 3600);
     const mins = ~~((totalTime % 3600) / 60);
     const secs = ~~totalTime % 60;

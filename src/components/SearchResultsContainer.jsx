@@ -1,10 +1,11 @@
 "use client";
 import { sortTracks } from "@/methods/sortTracks";
-import { getNextTracks, getPreviousTracks } from "@/methods/spotifyApis";
+import { getNextTracks, getPreviousTracks, createPlaylist, addTracksToPlaylist } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SearchResults from "./SearchResults";
 import TrackList from "./TrackList";
+import { extractTracksUris } from "@/methods/extractTracksUris";
 
 export default function SearchResultsContainer({
   foundTracks,
@@ -15,6 +16,7 @@ export default function SearchResultsContainer({
   totalTracks,
   offset,
   setOffset,
+  spotifyUser
 }) {
   const [trackList, setTrackList] = useState([]);
   const [jammmTracks, setJammmTracks] = useState([]);
@@ -27,7 +29,11 @@ export default function SearchResultsContainer({
   }, [sortBy]);
 
   const addTrack = (track) => {
-    setJammmTracks([...jammmTracks, track]);
+    if (jammmTracks.length < 100) {
+      setJammmTracks([...jammmTracks, track]);
+    } else {
+      toast.error("Sorry! Maximum number of tracks is 100!")
+    }
   };
 
   const changeSortBy = (desiredSort) => {
@@ -35,13 +41,11 @@ export default function SearchResultsContainer({
   };
 
   const sortResults = () => {
-    const sortedTracks = [];
     if (trackList.length > 0) {
-      sortTracks([...trackList], sortBy);
+      setTrackList(sortTracks([...trackList], sortBy));
     } else {
-      sortTracks([...foundTracks], sortBy);
+      setTrackList(sortTracks([...foundTracks], sortBy));
     }
-    setTrackList(sortedTracks);
     setIsLoading(false);
   };
 
@@ -79,17 +83,12 @@ export default function SearchResultsContainer({
     toast.success("Track removed!");
   };
 
-  const submitForm = (jammmName) => {
-    toast.info("Submiting Form!");
-    console.log(jammmName, jammmTracks);
-  };
-
   const searchNextTracks = async () => {
     setIsLoading(true);
     setTrackList(new Array());
     toast.info("Clicked to search next tracks");
     const searchNextResponse = await getNextTracks(nextTracksUri);
-    const newlyFoundTracks = searchNextResponse.tracks.items;
+    const newlyFoundTracks = [...searchNextResponse.tracks.items];
     setTrackList(newlyFoundTracks);
     setPreviousTracksUri(searchNextResponse.tracks.previous);
     setNextTracksUri(searchNextResponse.tracks.next);
@@ -102,13 +101,24 @@ export default function SearchResultsContainer({
     setIsLoading(true);
     setTrackList(new Array());
     toast.info("Clicked to search previous tracks");
-    const searchNextResponse = await getPreviousTracks(previousTracksUri);
-    const newlyFoundTracks = searchNextResponse.tracks.items;
+    const searchPreviousResponse = await getPreviousTracks(previousTracksUri);
+    const newlyFoundTracks = [...searchPreviousResponse.tracks.items];
     setTrackList(newlyFoundTracks);
-    setPreviousTracksUri(searchNextResponse.tracks.previous);
-    setNextTracksUri(searchNextResponse.tracks.next);
-    setOffset(searchNextResponse.tracks.offset);
+    setPreviousTracksUri(searchPreviousResponse.tracks.previous);
+    setNextTracksUri(searchPreviousResponse.tracks.next);
+    setOffset(searchPreviousResponse.tracks.offset);
     setIsLoading(false);
+  };
+
+  const submitForm = async (jammmName) => {
+    toast.info("Submiting Form!");
+    const tracksUrisArray = extractTracksUris(jammmTracks)
+    console.log(spotifyUser)
+    const createPlayListResponse = await createPlaylist(spotifyUser.id, jammmName);
+    const addTracksResponse = await addTracksToPlaylist(createPlayListResponse.id, tracksUrisArray);
+    if (addTracksResponse.ok) {
+      setJammmTracks(new Array())
+    }
   };
 
   return (

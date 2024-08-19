@@ -4,6 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
+import Rules from "@/components/Rules";
 import { getTracks, spotifyLogin } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -75,9 +76,11 @@ export default function Home() {
             totalTracks={totalTracks}
             offset={offset}
             setOffset={setOffset}
+            spotifyUser={spotifyUser}
           />
         </>
       )}
+      <Rules />
       <ThemeSelectorContainer />
     </main>
   );

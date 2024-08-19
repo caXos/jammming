@@ -20,11 +20,11 @@ export default function TrackList({
 }) {
   const [jammmName, setJammmName] = useState("");
   const [totalTime, setTotalTime] = useState("0");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleJammmNameInput = (event) => {
     setJammmName(event.target.value);
   };
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = () => {
     if (!jammmName) {

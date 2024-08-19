@@ -50,8 +50,6 @@ export async function spotifyLogin() {
   let access_token = params.access_token;
   localStorage.setItem(stateKey, access_token);
 
-  let teste = localStorage.getItem(stateKey);
-
   const response = await fetch("https://api.spotify.com/v1/me", {
     headers: {
       Authorization: "Bearer " + access_token,
@@ -114,5 +112,55 @@ export async function getPreviousTracks(uri) {
     return responseJson;
   } else {
     toast.error("Spotify search error: " + responseJson.error.message);
+  }
+}
+
+export async function createPlaylist(userId, jammmName) {
+  console.log(userId, jammmName)
+  const uri = `https://api.spotify.com/v1/users/${userId}/playlists`;
+  const access_token = localStorage.getItem(stateKey);
+
+  const response = await fetch(uri, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    body: {
+      "name": jammmName,
+      "description": "Playlist created with Jammming!",
+      "public": false,
+      "collaborative": false,
+    },
+  });
+
+  const responseJson = await response.json();
+
+  if (response.ok) {
+    return responseJson;
+  } else {
+    toast.error("Error creating playlist: " + responseJson.error.message);
+  }
+}
+
+export async function addTracksToPlaylist(jammmId, uris) {
+  const uri = `https://api.spotify.com/v1/playlists/${jammmId}/tracks`;
+  const access_token = localStorage.getItem(stateKey);
+
+  const response = await fetch(uri, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${access_token}`,
+    },
+    body: {
+      "uris": uris
+    },
+  });
+
+  const responseJson = await response.json();
+
+  if (response.ok) {
+    return responseJson;
+  } else {
+    toast.error("Error adding tracks to playlist: " + responseJson.error.message);
   }
 }
