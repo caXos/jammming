@@ -6,7 +6,7 @@ import SearchPagination from "./SearchPagination";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
-export default function SearchResults({ tracks, addTrack, changeSortBy }) {
+export default function SearchResults({ tracks, addTrack, changeSortBy, offset, totalTracks }) {
   const handleAddButtonClick = (track) => {
     addTrack(track);
   };
@@ -62,7 +62,7 @@ export default function SearchResults({ tracks, addTrack, changeSortBy }) {
                 );
               })}
             </div>
-            <SearchPagination />
+            <SearchPagination showingTracks={offset} totalTracks={totalTracks} />
           </div>
         </div>
       </>

@@ -1,14 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+import { sortTracks } from "@/methods/sortTracks";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import SearchResults from "./SearchResults";
 import TrackList from "./TrackList";
-import { toast } from "react-toastify";
-import { sortTracks } from "@/methods/sortTracks";
 
-export default function SearchResultsContainer({ tracks }) {
+export default function SearchResultsContainer({ tracks, searchResponse }) {
   const [trackList, setTrackList] = useState([]);
   const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
+  const [nexTracksUri, setNextTracksUri] = useState("");
+  const [previousTracksUri, setPreviousTracksUri] = useState("");
+  const [offset, setOffset] = useState(0);
+  const [totalTracks, setTotalTracks] = useState(totalTracksFound);
 
   const addTrack = (track) => {
     setJammmTracks([...jammmTracks, track]);
@@ -67,21 +71,21 @@ export default function SearchResultsContainer({ tracks }) {
   };
 
   return (
-    <>
-      <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
-        <SearchResults
-          tracks={trackList.length > 0 ? trackList : tracks}
-          addTrack={addTrack}
-          changeSortBy={changeSortBy}
-        />
-        <TrackList
-          tracks={jammmTracks}
-          moveTrackUp={moveTrackUp}
-          moveTrackDown={moveTrackDown}
-          removeTrack={removeTrack}
-          submitForm={submitForm}
-        />
-      </div>
-    </>
+    <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
+      <SearchResults
+        tracks={trackList.length > 0 ? trackList : tracks}
+        addTrack={addTrack}
+        changeSortBy={changeSortBy}
+        offset={offset}
+        totalTracks={totalTracks}
+      />
+      <TrackList
+        tracks={jammmTracks} // change thist prop to jammmtracks
+        moveTrackUp={moveTrackUp}
+        moveTrackDown={moveTrackDown}
+        removeTrack={removeTrack}
+        submitForm={submitForm}
+      />
+    </div>
   );
 }

@@ -4,16 +4,20 @@ import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
-import { spotifyLogin, getTracks } from "@/methods/spotifyApis";
+import { getTracks, spotifyLogin } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Home() {
   const [searchParams, setSearchParams] = useState("");
+  const [tracks, setTracks] = useState([]);
+  const [searchResponse, setSearchResponse] = useState(null)
+  const [searchErrors, setSearchErrors] = useState("");
+  const [spotifyUser, setSpotifyUser] = useState(null);
+
   const handleSearchInput = (event) => {
     setSearchParams(event.target.value);
   };
-  const [searchErrors, setSearchErrors] = useState("");
 
   const validateSearchInput = async () => {
     if (!searchParams) {
@@ -21,16 +25,14 @@ export default function Home() {
       setSearchErrors("You need to type something to search for!");
     } else {
       setSearchErrors("");
-      toast.warning("Final search string: " + searchParams); // Change this toast to a promise toast
-      const spotifyTracks = await getTracks(searchParams);
-      setTracks(spotifyTracks.tracks.items);
-      console.log(spotifyTracks);
+      toast.warning("Searching: " + searchParams); // Change this toast to a promise toast
+      const searchResponse = await getTracks(searchParams);
+      // setTracks(searchResponse.tracks.items);
+      setSearchResponse(searchResponse);
+      console.log(searchResponse);
     }
   };
 
-  const [tracks, setTracks] = useState([]);
-
-  const [spotifyUser, setSpotifyUser] = useState(null);
   const getSpotifyUser = async () => {
     setSpotifyUser(await spotifyLogin());
     toast.success("Logged to Spotify!");
@@ -57,7 +59,13 @@ export default function Home() {
             validateSearchInput={validateSearchInput}
             errorMessage={searchErrors}
           />
-          <SearchResultsContainer tracks={tracks} />
+          {/* <SearchResultsContainer
+            tracks={tracks}
+            nextTracksUri={firstSearchResponse.tracks.next}
+            totalTracksFound={firstSearchResponse.tracks.total}
+          /> */}
+          {/* <SearchResultsContainer tracks={tracks}  /> */}
+          <SearchResultsContainer searchResponse={searchResponse}  />
         </>
       )}
       <ThemeSelectorContainer />
