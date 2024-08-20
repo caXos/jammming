@@ -85,7 +85,7 @@ export default function SearchResultsContainer({
 
   const searchNextTracks = async () => {
     setIsLoading(true);
-    setTrackList(new Array());
+    setTrackList([]);
     toast.info("Clicked to search next tracks");
     const searchNextResponse = await getNextTracks(nextTracksUri);
     const newlyFoundTracks = [...searchNextResponse.tracks.items];
@@ -93,13 +93,13 @@ export default function SearchResultsContainer({
     setPreviousTracksUri(searchNextResponse.tracks.previous);
     setNextTracksUri(searchNextResponse.tracks.next);
     setOffset(searchNextResponse.tracks.offset);
-    setIsLoading(false);
-
+    // sortResults(); 
+    // setIsLoading(false);
   };
   
   const searchPreviousTracks = async () => {
     setIsLoading(true);
-    setTrackList(new Array());
+    setTrackList([]);
     toast.info("Clicked to search previous tracks");
     const searchPreviousResponse = await getPreviousTracks(previousTracksUri);
     const newlyFoundTracks = [...searchPreviousResponse.tracks.items];
@@ -107,7 +107,8 @@ export default function SearchResultsContainer({
     setPreviousTracksUri(searchPreviousResponse.tracks.previous);
     setNextTracksUri(searchPreviousResponse.tracks.next);
     setOffset(searchPreviousResponse.tracks.offset);
-    setIsLoading(false);
+    // sortResults(); 
+    // setIsLoading(false);
   };
 
   const submitForm = async (jammmName) => {
@@ -120,6 +121,12 @@ export default function SearchResultsContainer({
       setJammmTracks(new Array())
     }
   };
+
+  useEffect(() => {
+    if (trackList.length > 0) {
+      sortResults();
+    }
+  }, [trackList]);
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
