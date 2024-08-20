@@ -16,7 +16,7 @@ export default function Rules() {
             <li>Start by clicking in the fist button to login. Don&apos; worry, Jammming! only requests permission to playlists, nothing else!</li>
             <li>Jammming! does not edit or remove previously created playlists</li>
             <li>Spotify allows the insertion of a maximum of 100 tracks per request, so Jammming is, for now, limited to creating playlists with 100 tracks maximum.</li>
-            <li>After creating a playlist successfully, to avoid loosing your search, Jammming cleans only the tracklist. This helps avoiding creating repeated playlists </li>
+            <li>After creating a playlist successfully, to avoid loosing your search, Jammming cleans only the tracklist. This is to avoid creating repeated playlists </li>
         </ul>
       </div>
     </div>

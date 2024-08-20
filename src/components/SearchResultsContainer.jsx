@@ -1,14 +1,20 @@
 "use client";
+import { extractTracksUris } from "@/methods/extractTracksUris";
 import { sortTracks } from "@/methods/sortTracks";
-import { getNextTracks, getPreviousTracks, createPlaylist, addTracksToPlaylist } from "@/methods/spotifyApis";
+import {
+  addTracksToPlaylist,
+  createPlaylist,
+  getNextTracks,
+  getPreviousTracks,
+} from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import SearchResults from "./SearchResults";
 import TrackList from "./TrackList";
-import { extractTracksUris } from "@/methods/extractTracksUris";
 
 export default function SearchResultsContainer({
   foundTracks,
+  setFoundTracks,
   nextTracksUri,
   setNextTracksUri,
   previousTracksUri,
@@ -16,9 +22,8 @@ export default function SearchResultsContainer({
   totalTracks,
   offset,
   setOffset,
-  spotifyUser
+  spotifyUser,
 }) {
-  const [trackList, setTrackList] = useState([]);
   const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
   const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +37,7 @@ export default function SearchResultsContainer({
     if (jammmTracks.length < 100) {
       setJammmTracks([...jammmTracks, track]);
     } else {
-      toast.error("Sorry! Maximum number of tracks is 100!")
+      toast.error("Sorry! Maximum number of tracks is 100!");
     }
   };
 
@@ -41,11 +46,7 @@ export default function SearchResultsContainer({
   };
 
   const sortResults = () => {
-    if (trackList.length > 0) {
-      setTrackList(sortTracks([...trackList], sortBy));
-    } else {
-      setTrackList(sortTracks([...foundTracks], sortBy));
-    }
+    setFoundTracks(sortTracks([...foundTracks], sortBy));
     setIsLoading(false);
   };
 
@@ -85,53 +86,54 @@ export default function SearchResultsContainer({
 
   const searchNextTracks = async () => {
     setIsLoading(true);
-    setTrackList([]);
+    setFoundTracks([]);
     toast.info("Clicked to search next tracks");
     const searchNextResponse = await getNextTracks(nextTracksUri);
     const newlyFoundTracks = [...searchNextResponse.tracks.items];
-    setTrackList(newlyFoundTracks);
+    setFoundTracks(newlyFoundTracks);
     setPreviousTracksUri(searchNextResponse.tracks.previous);
     setNextTracksUri(searchNextResponse.tracks.next);
     setOffset(searchNextResponse.tracks.offset);
-    // sortResults(); 
-    // setIsLoading(false);
+    setIsLoading(false);
+    changeSortBy("title");
   };
-  
+
   const searchPreviousTracks = async () => {
     setIsLoading(true);
-    setTrackList([]);
+    setFoundTracks([]);
     toast.info("Clicked to search previous tracks");
     const searchPreviousResponse = await getPreviousTracks(previousTracksUri);
     const newlyFoundTracks = [...searchPreviousResponse.tracks.items];
-    setTrackList(newlyFoundTracks);
+    setFoundTracks(newlyFoundTracks);
     setPreviousTracksUri(searchPreviousResponse.tracks.previous);
     setNextTracksUri(searchPreviousResponse.tracks.next);
     setOffset(searchPreviousResponse.tracks.offset);
-    // sortResults(); 
-    // setIsLoading(false);
+    setIsLoading(false);
+    changeSortBy("title");
   };
 
   const submitForm = async (jammmName) => {
     toast.info("Submiting Form!");
-    const tracksUrisArray = extractTracksUris(jammmTracks)
-    console.log(spotifyUser)
-    const createPlayListResponse = await createPlaylist(spotifyUser.id, jammmName);
-    const addTracksResponse = await addTracksToPlaylist(createPlayListResponse.id, tracksUrisArray);
-    if (addTracksResponse.ok) {
-      setJammmTracks(new Array())
-    }
+    const tracksUrisArray = extractTracksUris(jammmTracks);
+    console.log(spotifyUser);
+    const createPlayListResponse = await createPlaylist(
+      spotifyUser.id,
+      jammmName
+    );
+    console.log(createPlayListResponse)
+    // const addTracksResponse = await addTracksToPlaylist(
+    //   createPlayListResponse.id,
+    //   tracksUrisArray
+    // );
+    // if (addTracksResponse.ok) {
+    //   setJammmTracks(new Array());
+    // }
   };
-
-  useEffect(() => {
-    if (trackList.length > 0) {
-      sortResults();
-    }
-  }, [trackList]);
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
       <SearchResults
-        tracks={trackList.length > 0 ? trackList : foundTracks} // Change this to foundTracks
+        tracks={foundTracks} // Change this to foundTracks
         addTrack={addTrack}
         changeSortBy={changeSortBy}
         offset={offset}

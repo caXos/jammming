@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 const stateKey = "spotify_auth_state";
 const client_id = "34643a9bb95144ee936c43a5cf863256";
 const redirect_uri = "http://localhost:3000/";
-const scope = "playlist-modify-public";
+const scope = "user-read-private user-read-email playlist-modify-public playlist-modify-private";
 /**
  * Obtains parameters from the hash of the URL
  * @return Object
@@ -35,9 +35,9 @@ function generateRandomString(length) {
 }
 
 export async function spotifyAuthorize() {
-  let client_id = "34643a9bb95144ee936c43a5cf863256";
-  let redirect_uri = "http://localhost:3000/";
-  let scope = "playlist-modify-public";
+  // let client_id = "34643a9bb95144ee936c43a5cf863256";
+  // let redirect_uri = "http://localhost:3000/";
+  // let scope = "playlist-modify-public";
   window.open(
     `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&redirect_uri=${redirect_uri}&scope=${scope}&show_dialog=true`,
     "_self",
@@ -57,6 +57,7 @@ export async function spotifyLogin() {
   });
 
   const responseJson = await response.json();
+  console.log(responseJson)
 
   if (response.ok) {
     window.history.replaceState(null, "", redirect_uri);
@@ -116,7 +117,6 @@ export async function getPreviousTracks(uri) {
 }
 
 export async function createPlaylist(userId, jammmName) {
-  console.log(userId, jammmName)
   const uri = `https://api.spotify.com/v1/users/${userId}/playlists`;
   const access_token = localStorage.getItem(stateKey);
 
@@ -125,12 +125,12 @@ export async function createPlaylist(userId, jammmName) {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
-    body: {
+    body: JSON.stringify({
       "name": jammmName,
       "description": "Playlist created with Jammming!",
       "public": false,
       "collaborative": false,
-    },
+    }),
   });
 
   const responseJson = await response.json();
@@ -138,6 +138,7 @@ export async function createPlaylist(userId, jammmName) {
   if (response.ok) {
     return responseJson;
   } else {
+    console.log("Error creating playlist: " + responseJson.error.message)
     toast.error("Error creating playlist: " + responseJson.error.message);
   }
 }

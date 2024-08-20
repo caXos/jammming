@@ -69,6 +69,7 @@ export default function Home() {
           />
           <SearchResultsContainer
             foundTracks={foundTracks}
+            setFoundTracks={setFoundTracks}
             nextTracksUri={nextTracksUri}
             setNextTracksUri={setNextTracksUri}
             previousTracksUri={previousTracksUri}
