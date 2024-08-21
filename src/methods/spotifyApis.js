@@ -56,7 +56,7 @@ export async function spotifyLogin() {
     },
   });
 
-  if (response.status !== 200) {
+  if (response.status === 200) {
     const responseJson = await response.json();
     window.history.replaceState(null, "", redirect_uri);
 
@@ -76,7 +76,7 @@ export async function getTracks(searchString, searchingToastId = null) {
     },
   });
 
-  if (response.status !== 200) {
+  if (response.status === 200) {
     const responseJson = await response.json();
     return responseJson;
   } else {
@@ -100,7 +100,7 @@ export async function getNextTracks(uri, searchNextTracksToastId = null) {
       Authorization: `Bearer ${access_token}`,
     },
   });
-  if (response.status !== 200) {
+  if (response.status === 200) {
     const responseJson = await response.json();
     return responseJson;
   } else {
@@ -126,7 +126,7 @@ export async function getPreviousTracks(
       Authorization: `Bearer ${access_token}`,
     },
   });
-  if (response.status !== 200) {
+  if (response.status === 200) {
     const responseJson = await response.json();
     return responseJson;
   } else {
@@ -168,7 +168,7 @@ export async function createPlaylist(
     }),
   });
 
-  if (response.status !== 200) {
+  if (response.status === 200) {
     const responseJson = await response.json();
     return responseJson;
   } else {
@@ -203,7 +203,7 @@ export async function addTracksToPlaylist(
     }),
   });
 
-  if (response.status !== 200) {
+  if (response.status === 200) {
     const responseJson = await response.json();
     return responseJson;
   } else {

@@ -1,7 +1,13 @@
 import { convertMsToMin } from "@/methods/calculateTotalTime";
 import { concatenateArtistsNames } from "@/methods/concatenateArtistsNames";
+import ArrowTopRightIcon from "./Icon_ArrowTopRight";
 
 export default function Track({ track = null, customClass = "" }) {
+  const openInSpotify = () => {
+    window.open(track.external_urls.spotify, '_blank')
+  } 
+  console.log(track)
+
   if (track) {
     return (
       <>
@@ -21,7 +27,7 @@ export default function Track({ track = null, customClass = "" }) {
             {concatenateArtistsNames(track["artists"])}
           </div>
           <div
-            className="col-span-7 text-xs overflow-clip border-e-2"
+            className="col-span-6 text-xs overflow-clip border-e-2"
             title="Album name"
           >
             {track.album.name}
@@ -29,6 +35,9 @@ export default function Track({ track = null, customClass = "" }) {
           <div className="col-span-1 text-xs overflow-clip" title="Duration">
             {convertMsToMin(track.duration_ms / 1000)}
           </div>
+          <button type="button" aria-label="View in Spotify" title="View in Spotify" onClick={openInSpotify}>
+            <ArrowTopRightIcon />
+          </button>
         </div>
       </>
     );
