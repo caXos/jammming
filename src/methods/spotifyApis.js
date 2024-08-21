@@ -3,7 +3,8 @@ const stateKey = "spotify_auth_state";
 const client_id = "34643a9bb95144ee936c43a5cf863256";
 // const redirect_uri = "http://localhost:3000/";
 const redirect_uri = "https://jammming-jorge-henrique-bueno-gomezs-projects.vercel.app/";
-const scope = "playlist-modify-public";
+
+const scope = "playlist-modify-public user-read-private user-read-email";
 
 /**
  * Obtains parameters from the hash of the URL
