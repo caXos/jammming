@@ -23,6 +23,7 @@ export default function SearchResultsContainer({
   offset,
   setOffset,
   spotifyUser,
+  setJammmUri
 }) {
   const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
@@ -115,19 +116,16 @@ export default function SearchResultsContainer({
   const submitForm = async (jammmName) => {
     toast.info("Submiting Form!");
     const tracksUrisArray = extractTracksUris(jammmTracks);
-    console.log(spotifyUser);
     const createPlayListResponse = await createPlaylist(
       spotifyUser.id,
       jammmName
     );
     console.log(createPlayListResponse)
-    // const addTracksResponse = await addTracksToPlaylist(
-    //   createPlayListResponse.id,
-    //   tracksUrisArray
-    // );
-    // if (addTracksResponse.ok) {
-    //   setJammmTracks(new Array());
-    // }
+    const addTracksResponse = await addTracksToPlaylist(
+      createPlayListResponse.id,
+      tracksUrisArray
+    );
+    setJammmUri(createPlayListResponse.external_urls.spotify)
   };
 
   return (

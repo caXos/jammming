@@ -52,7 +52,7 @@ export default function ThemeSelectorContainer() {
           {themesArray.map((theme, index) => {
             if (theme === "retro") {
               return (
-                <option value={theme} key={index}>
+                <option value={theme} key={index} selected>
                   {theme.charAt(0).toUpperCase() + theme.slice(1)} (default)
                 </option>
               );

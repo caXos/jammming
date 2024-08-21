@@ -4,7 +4,7 @@ import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
-import Rules from "@/components/Rules";
+import JammmLink from "@/components/JammmLink";
 import { getTracks, spotifyLogin } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -18,6 +18,7 @@ export default function Home() {
   const [previousTracksUri, setPreviousTracksUri] = useState("");
   const [totalTracks, setTotalTracks] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [jammmUri, setJammmUri] = useState("");
 
   useEffect(() => {
     let windowUri = window.location.href;
@@ -78,10 +79,11 @@ export default function Home() {
             offset={offset}
             setOffset={setOffset}
             spotifyUser={spotifyUser}
+            setJammmUri={setJammmUri}
           />
+          {!jammmUri ? "" : <JammmLink jammmUri={jammmUri} />}
         </>
       )}
-      <Rules />
       <ThemeSelectorContainer />
     </main>
   );

@@ -13,12 +13,14 @@ export default function Button(props) {
 
   const tooltipText = props.tooltipText ? props.tooltipText : null;
 
+  const customClass = props.customClass ? props.customClass : '';
+
   if (disabled) {
     return (
       <div className="tooltip" data-tip={tooltipText}>
         <button
           type={type}
-          className={`btn btn-ghost hover:btn-active`}
+          className={`btn btn-ghost hover:btn-active ${customClass}`}
           disabled
         >
           {props.children}
@@ -30,7 +32,7 @@ export default function Button(props) {
       <div className="tooltip" data-tip={tooltipText}>
         <button
           type={type}
-          className={`btn btn-${color} hover:btn-active`}
+          className={`btn btn-${color} hover:btn-active ${customClass}`}
           onClick={handleClick}
         >
           {props.children}
