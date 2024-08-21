@@ -56,18 +56,17 @@ export async function spotifyLogin() {
     },
   });
 
-  const responseJson = await response.json();
-
-  if (response.ok) {
+  if (response.status !== 200) {
+    const responseJson = await response.json();
     window.history.replaceState(null, "", redirect_uri);
 
     return responseJson;
   } else {
-    toast.error("Spotify login error: " + responseJson.error.message);
+    toast.error("Spotify login error: " + response.statusText);
   }
 }
 
-export async function getTracks(searchString) {
+export async function getTracks(searchString, searchingToastId = null) {
   const uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=track&limit=50`;
   const access_token = localStorage.getItem(stateKey);
 
@@ -77,44 +76,78 @@ export async function getTracks(searchString) {
     },
   });
 
-  const responseJson = await response.json();
-  if (response.ok) {
+  if (response.status !== 200) {
+    const responseJson = await response.json();
     return responseJson;
   } else {
-    toast.error("Spotify search error: " + responseJson.error.message);
+    if (searchingToastId) {
+      toast.update(searchingToastId, {
+        render: "Spotify search error: " + response.statusText,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Spotify search error: " + response.statusText);
+    }
   }
 }
 
-export async function getNextTracks(uri) {
+export async function getNextTracks(uri, searchNextTracksToastId = null) {
   const access_token = localStorage.getItem(stateKey);
   const response = await fetch(uri, {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   });
-  const responseJson = await response.json();
-  if (response.ok) {
+  if (response.status !== 200) {
+    const responseJson = await response.json();
     return responseJson;
   } else {
-    toast.error("Spotify search error: " + responseJson.error.message);
+    if (searchNextTracksToastId) {
+      toast.update(searchNextTracksToastId, {
+        render: "Spotify search error: " + response.statusText,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Spotify search error: " + response.statusText);
+    }
   }
 }
-export async function getPreviousTracks(uri) {
+export async function getPreviousTracks(
+  uri,
+  searchPreviousTracksToastId = null
+) {
   const access_token = localStorage.getItem(stateKey);
   const response = await fetch(uri, {
     headers: {
       Authorization: `Bearer ${access_token}`,
     },
   });
-  const responseJson = await response.json();
-  if (response.ok) {
+  if (response.status !== 200) {
+    const responseJson = await response.json();
     return responseJson;
   } else {
-    toast.error("Spotify search error: " + responseJson.error.message);
+    if (searchPreviousTracksToastId) {
+      toast.update(searchPreviousTracksToastId, {
+        render: "Spotify search error: " + response.statusText,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Spotify search error: " + response.statusText);
+    }
   }
 }
 
-export async function createPlaylist(userId, jammmName) {
+export async function createPlaylist(
+  userId,
+  jammmName,
+  submitFormToastId = null
+) {
   const uri = `https://api.spotify.com/v1/users/${userId}/playlists`;
   const access_token = localStorage.getItem(stateKey);
 
@@ -135,16 +168,28 @@ export async function createPlaylist(userId, jammmName) {
     }),
   });
 
-  const responseJson = await response.json();
-
-  if (response.ok) {
+  if (response.status !== 200) {
+    const responseJson = await response.json();
     return responseJson;
   } else {
-    toast.error("Error creating playlist: " + responseJson.error.message);
+    if (submitFormToastId) {
+      toast.update(submitFormToastId, {
+        render: "Error creating playlist: " + response.statusText,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Error creating playlist: " + response.statusText);
+    }
   }
 }
 
-export async function addTracksToPlaylist(jammmId, uris) {
+export async function addTracksToPlaylist(
+  jammmId,
+  uris,
+  submitFormToastId = null
+) {
   const uri = `https://api.spotify.com/v1/playlists/${jammmId}/tracks`;
   const access_token = localStorage.getItem(stateKey);
 
@@ -158,13 +203,19 @@ export async function addTracksToPlaylist(jammmId, uris) {
     }),
   });
 
-  const responseJson = await response.json();
-
-  if (response.ok) {
+  if (response.status !== 200) {
+    const responseJson = await response.json();
     return responseJson;
   } else {
-    toast.error(
-      "Error adding tracks to playlist: " + responseJson.error.message
-    );
+    if (submitFormToastId) {
+      toast.update(submitFormToastId, {
+        render: "Error creating playlist: " + response.statusText,
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } else {
+      toast.error("Error adding tracks to playlist: " + response.statusText);
+    }
   }
 }

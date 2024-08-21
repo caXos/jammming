@@ -89,7 +89,7 @@ export default function SearchResultsContainer({
     setIsLoading(true);
     setFoundTracks([]);
     const searchNextTracksToast = toast.loading("Searching next tracks");
-    const searchNextResponse = await getNextTracks(nextTracksUri);
+    const searchNextResponse = await getNextTracks(nextTracksUri, searchNextTracksToast);
     const newlyFoundTracks = [...searchNextResponse.tracks.items];
     setFoundTracks(newlyFoundTracks);
     setPreviousTracksUri(searchNextResponse.tracks.previous);
@@ -130,11 +130,13 @@ export default function SearchResultsContainer({
     const tracksUrisArray = extractTracksUris(jammmTracks);
     const createPlayListResponse = await createPlaylist(
       spotifyUser.id,
-      jammmName
+      jammmName, 
+      submitFormToast
     );
     const addTracksResponse = await addTracksToPlaylist(
       createPlayListResponse.id,
-      tracksUrisArray
+      tracksUrisArray,
+      submitFormToast
     );
     setJammmUri(createPlayListResponse.external_urls.spotify);
     toast.update(submitFormToast, {

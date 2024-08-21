@@ -38,7 +38,7 @@ export default function Home() {
     } else {
       setSearchErrors("");
       const searchingToast = toast.loading("Searching tracks");
-      const searchResponse = await getTracks(searchParams);
+      const searchResponse = await getTracks(searchParams, searchingToast);
       setFoundTracks(searchResponse.tracks.items);
       setNextTracksUri(searchResponse.tracks.next);
       setPreviousTracksUri(searchResponse.tracks.previous);
