@@ -48,11 +48,12 @@ export default function ThemeSelectorContainer() {
         <select
           className="select select-bordered w-full max-w-xs"
           onChange={changeTheme}
+          defaultValue="retro"
         >
           {themesArray.map((theme, index) => {
             if (theme === "retro") {
               return (
-                <option value={theme} key={index} selected>
+                <option value={theme} key={index}>
                   {theme.charAt(0).toUpperCase() + theme.slice(1)} (default)
                 </option>
               );
@@ -65,6 +66,7 @@ export default function ThemeSelectorContainer() {
             }
           })}
         </select>
+        <span className="mt-2">Powered by 🌼DaisyUI&apos;s themes</span>
       </div>
     </>
   );

@@ -23,7 +23,7 @@ export default function SearchResultsContainer({
   offset,
   setOffset,
   spotifyUser,
-  setJammmUri
+  setJammmUri,
 }) {
   const [jammmTracks, setJammmTracks] = useState([]);
   const [sortBy, setSortBy] = useState("title");
@@ -120,12 +120,11 @@ export default function SearchResultsContainer({
       spotifyUser.id,
       jammmName
     );
-    console.log(createPlayListResponse)
     const addTracksResponse = await addTracksToPlaylist(
       createPlayListResponse.id,
       tracksUrisArray
     );
-    setJammmUri(createPlayListResponse.external_urls.spotify)
+    setJammmUri(createPlayListResponse.external_urls.spotify);
   };
 
   return (

@@ -1,9 +1,9 @@
 import localFont from "next/font/local";
 import CircleButton from "./CircleButton";
+import LoadingBars from "./LoadingBars";
 import SearchPagination from "./SearchPagination";
 import SortRadios from "./SortRadios";
 import Track from "./Track";
-import LoadingBars from "./LoadingBars";
 
 const amVinylFont = localFont({ src: "../fonts/AMVINYL-Heavy.ttf" });
 
@@ -68,7 +68,7 @@ export default function SearchResults({
                     >
                       <Track track={track} />
                       <div
-                        className="md:tooltip"
+                        className="md:tooltip md:tooltip-left"
                         data-tip="Add to tracklist"
                         onClick={() => handleAddButtonClick(track)}
                       >

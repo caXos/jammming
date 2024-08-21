@@ -2,8 +2,8 @@ import { toast } from "react-toastify";
 const stateKey = "spotify_auth_state";
 const client_id = "34643a9bb95144ee936c43a5cf863256";
 const redirect_uri = "http://localhost:3000/";
-const scope =
-  "user-read-private user-read-email playlist-modify-public playlist-modify-private";
+const scope = "playlist-modify-public";
+
 /**
  * Obtains parameters from the hash of the URL
  * @return Object
@@ -55,7 +55,6 @@ export async function spotifyLogin() {
   });
 
   const responseJson = await response.json();
-  console.log(responseJson);
 
   if (response.ok) {
     window.history.replaceState(null, "", redirect_uri);
@@ -130,7 +129,7 @@ export async function createPlaylist(userId, jammmName) {
         new Date().toLocaleDateString() +
         " at " +
         new Date().toLocaleTimeString(),
-      public: false,
+      public: true,
       collaborative: false,
     }),
   });
@@ -140,7 +139,6 @@ export async function createPlaylist(userId, jammmName) {
   if (response.ok) {
     return responseJson;
   } else {
-    console.log("Error creating playlist: " + responseJson.error.message);
     toast.error("Error creating playlist: " + responseJson.error.message);
   }
 }
@@ -164,9 +162,6 @@ export async function addTracksToPlaylist(jammmId, uris) {
   if (response.ok) {
     return responseJson;
   } else {
-    console.log(
-      "Error adding tracks to playlist: " + responseJson.error.message
-    );
     toast.error(
       "Error adding tracks to playlist: " + responseJson.error.message
     );
