@@ -66,7 +66,7 @@ export default function ThemeSelectorContainer() {
             }
           })}
         </select>
-        <span className="mt-2">Powered by 🌼DaisyUI&apos;s themes</span>
+        <span className="mt-2">Themes provided by 🌼DaisyUI</span>
       </div>
     </>
   );
