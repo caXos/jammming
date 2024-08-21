@@ -71,41 +71,43 @@ export default function TrackList({
                 >
                   <p className="row-span-2 pl-2">{index + 1}: </p>
                   <Track track={track} customClass="col-span-9" />
-                  <div className="flex justify-evenly w-full p-2 col-span-9">
-                    {index === 0 ? (
-                      ""
-                    ) : (
+                  <div className="col-span-9">
+                    <div className="grid grid-cols-3 w-full p-2">
+                      {index === 0 ? (
+                        <span className="transparent text-xs text-transparent">placeholder</span>
+                      ) : (
+                        <div
+                          className="md:tooltip"
+                          data-tip="Move up"
+                          onClick={() => {
+                            moveTrackUp(index);
+                          }}
+                        >
+                          <CircleButton icon="up" />
+                        </div>
+                      )}
+                      {index + 1 === jammmtracks.length ? (
+                        <span className="transparent text-xs text-transparent">placeholder</span>
+                      ) : (
+                        <div
+                          className="md:tooltip"
+                          data-tip="Move down"
+                          onClick={() => {
+                            moveTrackDown(index);
+                          }}
+                        >
+                          <CircleButton icon="down" />
+                        </div>
+                      )}
                       <div
                         className="md:tooltip"
-                        data-tip="Move up"
+                        data-tip="Remove"
                         onClick={() => {
-                          moveTrackUp(index);
+                          removeTrack(index);
                         }}
                       >
-                        <CircleButton icon="up" />
+                        <CircleButton icon="remove" />
                       </div>
-                    )}
-                    {index + 1 === jammmtracks.length ? (
-                      ""
-                    ) : (
-                      <div
-                        className="md:tooltip"
-                        data-tip="Move down"
-                        onClick={() => {
-                          moveTrackDown(index);
-                        }}
-                      >
-                        <CircleButton icon="down" />
-                      </div>
-                    )}
-                    <div
-                      className="md:tooltip"
-                      data-tip="Remove"
-                      onClick={() => {
-                        removeTrack(index);
-                      }}
-                    >
-                      <CircleButton icon="remove" />
                     </div>
                   </div>
                 </div>

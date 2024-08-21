@@ -10,13 +10,13 @@ export default function SearchPagination({
 }) {
   return (
     <div
-      className="w-full flex flex-row justify-evenly text-accent"
+      className="w-full grid grid-cols-3 justify-evenly text-accent"
       title={`Showing ${showingTracks + 1} - ${
         50 + showingTracks
       } of ${totalTracks} results`}
     >
       {!showLeftButton ? (
-        ""
+        <span className="transparent text-xs text-transparent">placeholder</span>
       ) : (
         <div
           className="md:tooltip"
@@ -32,7 +32,7 @@ export default function SearchPagination({
       </div>
 
       {!showRightButton ? (
-        ""
+        <span className="transparent text-xs text-transparent">placeholder</span>
       ) : (
         <div
           className="md:tooltip"

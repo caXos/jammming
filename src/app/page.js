@@ -1,10 +1,10 @@
 "use client";
 import Hero from "@/components/Hero";
+import JammmLink from "@/components/JammmLink";
 import SearchBar from "@/components/SearchBar";
 import SearchResultsContainer from "@/components/SearchResultsContainer";
 import SpotifyLoginContainer from "@/components/SpotifyLoginContainer";
 import ThemeSelectorContainer from "@/components/ThemeSelectorContainer";
-import JammmLink from "@/components/JammmLink";
 import { getTracks, spotifyLogin } from "@/methods/spotifyApis";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -37,13 +37,19 @@ export default function Home() {
       setSearchErrors("You need to type something to search for!");
     } else {
       setSearchErrors("");
-      toast.warning("Searching: " + searchParams); // Change this toast to a promise toast
+      const searchingToast = toast.loading("Searching tracks");
       const searchResponse = await getTracks(searchParams);
       setFoundTracks(searchResponse.tracks.items);
       setNextTracksUri(searchResponse.tracks.next);
       setPreviousTracksUri(searchResponse.tracks.previous);
       setOffset(searchResponse.tracks.offset);
       setTotalTracks(searchResponse.tracks.total);
+      toast.update(searchingToast, {
+        render: 'Tracks found!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 1000
+      });
     }
   };
 

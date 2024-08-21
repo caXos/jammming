@@ -88,7 +88,7 @@ export default function SearchResultsContainer({
   const searchNextTracks = async () => {
     setIsLoading(true);
     setFoundTracks([]);
-    toast.info("Clicked to search next tracks");
+    const searchNextTracksToast = toast.loading("Searching next tracks");
     const searchNextResponse = await getNextTracks(nextTracksUri);
     const newlyFoundTracks = [...searchNextResponse.tracks.items];
     setFoundTracks(newlyFoundTracks);
@@ -97,12 +97,18 @@ export default function SearchResultsContainer({
     setOffset(searchNextResponse.tracks.offset);
     setIsLoading(false);
     changeSortBy("title");
+    toast.update(searchNextTracksToast, {
+      render: 'Tracks found!',
+      type: 'success',
+      isLoading: false,
+      autoClose: 1000
+    });
   };
 
   const searchPreviousTracks = async () => {
     setIsLoading(true);
     setFoundTracks([]);
-    toast.info("Clicked to search previous tracks");
+    const searchPreviousTracksToast = toast.loading("Searching previous tracks");
     const searchPreviousResponse = await getPreviousTracks(previousTracksUri);
     const newlyFoundTracks = [...searchPreviousResponse.tracks.items];
     setFoundTracks(newlyFoundTracks);
@@ -111,10 +117,16 @@ export default function SearchResultsContainer({
     setOffset(searchPreviousResponse.tracks.offset);
     setIsLoading(false);
     changeSortBy("title");
+    toast.update(searchPreviousTracksToast, {
+      render: 'Tracks found!',
+      type: 'success',
+      isLoading: false,
+      autoClose: 1000
+    });
   };
 
   const submitForm = async (jammmName) => {
-    toast.info("Submiting Form!");
+    const submitFormToast = toast.loading("Creating Jammm!")
     const tracksUrisArray = extractTracksUris(jammmTracks);
     const createPlayListResponse = await createPlaylist(
       spotifyUser.id,
@@ -125,12 +137,18 @@ export default function SearchResultsContainer({
       tracksUrisArray
     );
     setJammmUri(createPlayListResponse.external_urls.spotify);
+    toast.update(submitFormToast, {
+      render: 'Created Jammm!',
+      type: 'success',
+      isLoading: false,
+      autoClose: 1000
+    });
   };
 
   return (
     <div className="flex flex-col md:flex-row items-center justify-between bg-base-200 p-2 rounded-md w-11/12">
       <SearchResults
-        tracks={foundTracks} // Change this to foundTracks
+        tracks={foundTracks}
         addTrack={addTrack}
         changeSortBy={changeSortBy}
         offset={offset}

@@ -66,7 +66,6 @@ export async function spotifyLogin() {
 }
 
 export async function getTracks(searchString) {
-  // const uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=album,artist,track`;
   const uri = `https://api.spotify.com/v1/search?q=${searchString}?&type=track&limit=50`;
   const access_token = localStorage.getItem(stateKey);
 
