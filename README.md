@@ -1,6 +1,6 @@
 # JAMMMING!
 
-Jammming is a website that allows users to search the Spotify library, create a custom playlist, then save it to their Spotify account. It was made as a project for the React module of the Full Stack Engineer career path on Codecademy.com
+Jammming is a website that allows users to search the Spotify library, create a custom playlist, then save it to their Spotify account. It was made as a project for the React module of the Full Stack Engineer career path on [Codecademy](https://codecademy.com)
 
 This project objective is to allow users to login to [Spotify](https://open.spotify.com/), search tracks, sort the results, add them to a custom playlist, name the playlist an then save it directly into their account. 
 At the end, the app shows two buttons: one to open the link to the newly created playlist on another tab/window and the other copies the link into the clipboard.
@@ -50,7 +50,7 @@ npm run dev
 Landing page
 ![LandingPageScreenshot](/src/md_lib/images/jammming_01.png "Landing page screenshot")
 
-After loggin in to Spotify
+After logging in to Spotify
 ![LoggedToSpotify](/src/md_lib/images/jammming_02.png "Logged to Spotify")
 
 Searching tracks
