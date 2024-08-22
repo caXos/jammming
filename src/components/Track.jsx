@@ -6,7 +6,6 @@ export default function Track({ track = null, customClass = "" }) {
   const openInSpotify = () => {
     window.open(track.external_urls.spotify, '_blank')
   } 
-  console.log(track)
 
   if (track) {
     return (
