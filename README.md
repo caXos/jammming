@@ -1,4 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# JAMMMING!
+
+This project objective is to allow users to login to [Spotify](https://open.spotify.com/), search tracks, sort the results, add them to a custom playlist, name the playlist an then save it directly into their account. 
+At the end, the app shows two buttons: one to open the link to the newly created playlist on another tab/window and the other copies the link into the clipboard.
+
+An app created directly into Spotify Dev plataform is required for Jammming to work. At least in development mode, Spotify requires that each user is created individually, and there is a 25 user limit, so, for now, one of Jammming's main functionalities (the versatility to open the app, log in, search tracks and create a playlist) is impaired, as it would require a user to request credentials, the admin would have to register each one up to 25.
+
+But, fear not! You can still try it locally!
 
 ## Getting Started
 
