@@ -55,9 +55,6 @@ export default function Home() {
 
   const getSpotifyUser = async () => {
     setSpotifyUser(await spotifyLogin());
-    toast.success("Logged to Spotify!", {
-      toastId: "loginSuccessToast",
-    });
   };
 
   return (

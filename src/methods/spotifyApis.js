@@ -58,6 +58,9 @@ export async function spotifyLogin() {
   if (response.status === 200 || response.status === 201) {
     const responseJson = await response.json();
     window.history.replaceState(null, "", redirect_uri);
+    toast.success("Logged to Spotify!", {
+      toastId: "loginSuccessToast",
+    });
 
     return responseJson;
   } else {
